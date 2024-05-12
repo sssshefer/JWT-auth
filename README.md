@@ -1,2 +1,2 @@
-# json-web-token-auth
-How to implement JWT authorization in your application
+# JWT Authorization
+This project shows how to implement JWT authorization in your application
