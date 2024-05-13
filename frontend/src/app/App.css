@@ -1,0 +1,213 @@
+:root {
+  --dark-primary-color: #2a2a2a;
+  --light-primary-color: #fff;
+  --bs-light-rgb: #fff;
+  --accent-color: #718AF4;
+  --grey: #BCBCBC;
+  --green-code: #A2C054;
+  --yellow-code: #E7BE5B;
+  --purple-code: #947596;
+  --blue-code: #5896B8;
+  --codeBackground: rgb(30, 30, 30);
+  --text1: 60px;
+  --text2: 42px;
+  --text3: 30px;
+  --text4: 24px;
+  --text5: 20px;
+  --text6: 14px;
+  /*
+   --text1: 73px;
+  --text2: 48px;
+  --text3: 35px;
+  --text4: 29px;
+  --text5: 19.6px;
+  --text6: 14px;*/
+  --light: 300;
+  --regular: 400;
+  --semiBold: 600;
+  --bold: 700;
+  --siteBorderRadius: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif, Arial;
+  border: 0;
+}
+
+b {
+  font-weight: var(--semiBold);
+}
+
+h1 {
+  font-size: var(--text1);
+  font-weight: var(--regular);
+}
+
+h2 {
+  font-size: var(--text2);
+  font-weight: var(--regular);
+}
+
+h3 {
+  font-size: var(--text3);
+  font-weight: var(--regular);
+}
+
+h4 {
+  font-size: var(--text4);
+  font-weight: var(--regular);
+}
+
+h5 {
+  font-size: var(--text5);
+  font-weight: var(--regular);
+}
+
+h6 {
+  font-size: var(--text6);
+  font-weight: var(--semiBold);
+}
+
+h1, h2, h3, h4, h5, h6, p, ul li, ol li, a, button {
+  color: var(--dark-primary-color);
+  margin: 0;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+html, body {
+  background-color: var(--light-primary-color);
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+input:focus-visible, input:focus, input:active {
+  outline: 0;
+}
+
+.text-1 {
+  font-size: var(--text1);
+  font-weight: var(--regular);
+}
+
+.text-2 {
+  font-size: var(--text2);
+  font-weight: var(--regular);
+}
+
+.text-3 {
+  font-size: var(--text3);
+  font-weight: var(--regular);
+}
+
+.text-4 {
+  font-size: var(--text4);
+  font-weight: var(--regular);
+}
+
+.text-5 {
+  font-size: var(--text5);
+  font-weight: var(--regular);
+}
+
+.text-6 {
+  font-size: var(--text6);
+  font-weight: var(--regular);
+}
+
+button {
+  font-size: var(--text5);
+  font-weight: var(--semiBold);
+  color: var(--dark-primary-color);
+  background-color: var(--light-primary-color);
+}
+button:active{
+  opacity: 0.9;
+  transition: 0.1s;
+}
+
+:focus-visible {
+  outline: none;
+}
+
+.buttonLilac {
+  background-color: var(--accent-color);
+  font-size: var(--text5);
+  color: var(--light-primary-color);
+  box-shadow: 0 4px 4px 0 #00000040;
+  border-radius: var(--siteBorderRadius);
+  padding: 8px 17px;
+  font-weight: var(--semiBold);
+}
+
+.accentColor {
+  color: var(--accent-color)
+}
+
+.lightPrimaryColor {
+  color: var(--light-primary-color)
+}
+
+.darkPrimaryColor {
+  color: var(--light-primary-color)
+}
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.light {
+  font-weight: var(--light);
+}
+
+.regular {
+  font-weight: var(--regular);
+}
+
+.semiBold {
+  font-weight: var(--semiBold);
+}
+
+.bold {
+  font-weight: var(--bold);
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../shared/fonts/Montserrat/static/Montserrat-Light.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../shared/fonts/Montserrat/static/Montserrat-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../shared/fonts/Montserrat/static/Montserrat-SemiBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+}
+
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../shared/fonts/Montserrat/static/Montserrat-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+}
+
