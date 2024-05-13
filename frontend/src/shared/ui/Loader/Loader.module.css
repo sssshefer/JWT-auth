@@ -31,7 +31,7 @@
     width: 100%;
     bottom: 0;
     z-index: 2;
-    background-color: var(--focus-color);
+    background-color: var(--accent-color);
     animation: loaderAnimation .875s infinite ease-in-out alternate;
 }
 
