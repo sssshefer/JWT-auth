@@ -4,19 +4,19 @@ import {IResponse} from "../types/IResponse";
 
 
 export const UserApi = {
-    async registration(email:string, password:string) {
+    async signup(email:string, password:string) {
         const timezoneOffset = Math.round(new Date().getTimezoneOffset()/60)*-1
         const {data} = await $host.post('signup', {email, password, timezoneOffset}) as IResponse
         localStorage.setItem('accessToken', data.accessToken)
         return data
     },
 
-    async useLogin() {
-        const login = async (email:string, password:string) => {
+    useLogin() {
+        const login = async (email:string, password:string) : Promise<IResponse>=> {
             let loginResponse = await $host.post('login', {email, password}) as IResponse
             localStorage.setItem('accessToken', loginResponse.data.accessToken);
-            let getUserResponse = await $authHost.get('getUser')
-
+            let getUserResponse = await $authHost.get('getUser') as IResponse
+            return getUserResponse
         };
         return login;
     },

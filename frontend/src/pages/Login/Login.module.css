@@ -1,0 +1,92 @@
+.wrap {
+    min-height: calc(100vh - 140px);
+}
+
+.form {
+    border: 1px solid var(--dark-primary-color);
+    width: 365px;
+    padding: 37px 44px 27px;
+}
+
+.title {
+    margin-bottom: 25px;
+    font-size: var(--text4);
+}
+
+.inputsWrap {
+    margin-bottom: 10px;
+}
+
+.inputsWrap input {
+    border: 1px solid var(--dark-primary-color);
+    margin: 10px 0;
+    width: 100%;
+    height: 41px;
+    padding: 4px 0 0 15px;
+    font-size: var(--text6);
+    font-weight: var(--regular);
+    font-family: Verdana, sans-serif, Arial;
+    letter-spacing: 0.125em;
+}
+
+
+.inputsWrap input:focus {
+    border: 1px solid var(--accent-color)
+}
+
+
+.inputsWrap input::placeholder {
+    font-size: var(--text6);
+    font-weight: var(--regular);
+}
+
+.forgotPassword, .signupLink {
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 25px;
+    font-size: var(--text6);
+    background-color: var(--light-primary-color);;
+}
+
+.submitButtonWrap > button {
+    margin-bottom: 24px;
+}
+
+.submitButtonWrap button {
+    border-radius: 0;
+    width: 100%;
+}
+
+.signupLinkWrap {
+    font-weight: var(--semiBold);
+    margin-top: 20px;
+    font-size: var(--text6);
+}
+
+.signupLink {
+    display: inline-block;
+    font-weight: var(--semiBold);
+}
+
+.sendNewPasswordButtonWrap {
+    margin: 0 0 20px
+}
+
+.sendNewPasswordButtonWrap > button {
+    font-size: var(--text6);
+    border-radius: 0;
+    width: 100%;
+}
+
+
+@media screen and (max-width: 576px) {
+    .title {
+        font-size: var(--text4);
+    }
+
+    .form {
+        border: 1px solid var(--dark-primary-color);
+        width: 310px;
+        padding: 37px 35px 7px;
+    }
+}

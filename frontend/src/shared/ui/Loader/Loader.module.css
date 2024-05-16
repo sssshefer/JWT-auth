@@ -4,15 +4,16 @@
     display: flex;
 }
 
-.text {
+.loader {
+    width: 100px;
+    height: 20px;
+    border-radius: 10px;
     margin: auto;
-    color: var(--dark-primary-color);
     position: relative;
-    display: inline-flex;
     overflow: hidden;
 }
 
-.text::before {
+.loader::before {
     content: '';
     z-index: 1;
     position: absolute;
@@ -23,7 +24,7 @@
     background-color: var(--dark-primary-color);
 }
 
-.text::after {
+.loader::after {
     content: '';
     position: absolute;
     top: 0;
@@ -35,13 +36,7 @@
     animation: loaderAnimation .875s infinite ease-in-out alternate;
 }
 
-.img {
-    z-index: 3;
-    position: initial;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
+
 
 @keyframes loaderAnimation {
     0% {

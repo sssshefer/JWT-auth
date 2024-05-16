@@ -1,0 +1,24 @@
+.wrap {
+    padding: 2% 0 0 15%;
+    position: relative;
+    overflow: hidden;
+}
+
+.userIconWrap {
+    position: absolute;
+    bottom: 5%;
+    right: 9%;
+    width: 37%;
+}
+
+@media screen and (max-width: 992px) {
+    .wrap {
+        padding: 2% 5% 0 5%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .userIconWrap {
+        display: none;
+    }
+}

@@ -1,0 +1,13 @@
+.wrap{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 80px);
+}
+
+.wrap p{
+    width: 360px;
+    font-size: var(--text5)
+}

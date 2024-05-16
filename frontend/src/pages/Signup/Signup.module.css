@@ -1,0 +1,87 @@
+.wrap {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    border: 1px solid var(--dark-primary-color);
+    width: 365px;
+    padding: 37px 44px 43px;
+}
+
+.title {
+    margin-bottom: 25px;
+    font-size: var(--text4)
+}
+
+.inputsWrap {
+    margin-bottom: 15px;
+}
+
+.inputsWrap input {
+    border: 1px solid var(--dark-primary-color);
+    margin: 10px 0;
+    width: 100%;
+    height: 41px;
+    padding: 4px 0 0 15px;
+    font-size: var(--text6);
+    font-weight: var(--regular);
+    font-family: Verdana, sans-serif, Arial;
+    letter-spacing: 0.125em;
+}
+
+.inputsWrap input:focus {
+    border: 1px solid var(--accent-color)
+}
+
+
+.inputsWrap input::placeholder {
+    font-size: var(--text6);
+    font-weight: var(--regular);
+
+}
+
+.forgotPassword {
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 25px;
+}
+.registrationButtonWrap button{
+    margin-bottom:10px;
+    border-radius: 0;
+    width: 100%;
+}
+.loginLinkWrap {
+    font-weight: var(--semiBold);
+    margin-top: 20px;
+    font-size: var(--text6);
+}
+
+.loginLink {
+    display: inline-block;
+    font-weight: var(--semiBold);
+    color:var(--accent-color)
+}
+
+.licenseAgreement {
+    margin-bottom: 10px;
+}
+
+.licenseAgreement a {
+    color: var(--accent-color);
+    font-weight: var(--bold);
+    border-bottom: 1px solid var(--accent-color);
+}
+
+@media screen and (max-width: 576px) {
+    .title {
+        font-size: var(--text4);
+    }
+    .form {
+        border: 1px solid var(--dark-primary-color);
+        width: 310px;
+        padding: 37px 35px 27px;
+    }
+}

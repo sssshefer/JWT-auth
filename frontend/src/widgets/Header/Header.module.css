@@ -1,0 +1,19 @@
+.wrap{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--light-primary-color);
+    border-bottom: 1px solid var(--dark-primary-color);
+    height: 80px;
+}
+
+.wrap ul{
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+}
+
+.wrap ul li{
+    margin: 0 10px;
+}

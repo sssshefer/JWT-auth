@@ -1,0 +1,8 @@
+.wrap{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color:var(--light-primary-color);
+}

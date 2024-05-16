@@ -1,0 +1,28 @@
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 75px);
+    width: 100%;
+    flex-direction: column;
+    background: var(--light-primary-color);
+}
+
+.smile {
+    font-size: 96px;
+    color: var(--accent-color);
+    transform: rotate(90deg) scale(1, -1);
+    margin-bottom: 50px;
+    font-weight: var(--light);
+}
+
+.title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: var(--text3);
+}
+
+.subtitle {
+    margin-bottom: 60px;
+    font-size: var(--text4);
+}
