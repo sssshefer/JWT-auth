@@ -10,12 +10,11 @@ interface LoginButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 }
 
 const LoginButton: FC<LoginButtonProps> = ({setResponse, email, password, children, ...props}) => {
-    const login = UserApi.useLogin();
 
     const handleLoginSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         try {
-            const response = await login(email, password)
+            const response = await UserApi.login(email, password)
             setResponse(response)
         }catch (e) {
             setResponse(unexpectedErrorResponse)

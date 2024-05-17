@@ -1,24 +1,34 @@
 .wrap {
-    padding: 2% 0 0 15%;
-    position: relative;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding:20px 0 100px;
 }
+
+.wrap h1 {
+    font-size: var(--text2);
+    margin-bottom: 20px;
+}
+
 
 .userIconWrap {
-    position: absolute;
-    bottom: 5%;
-    right: 9%;
-    width: 37%;
+    width: 150px;
 }
 
-@media screen and (max-width: 992px) {
-    .wrap {
-        padding: 2% 5% 0 5%;
-        position: relative;
-        overflow: hidden;
-    }
+.userProps {
+    border-spacing: 10px;
+}
 
-    .userIconWrap {
-        display: none;
-    }
+.userProps input{
+    width: 100%;
+    font-size: 16px;
+}
+.userProps tr {
+    text-align: left;
+}
+
+.userProps th, .userProps td {
+    padding:10px 10px;
+    border:1px solid var(--accent-color);
+
 }

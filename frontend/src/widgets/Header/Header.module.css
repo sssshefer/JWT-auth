@@ -1,17 +1,24 @@
 .wrap{
     display: flex;
-    justify-content: end;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 80px;
     background-color: var(--light-primary-color);
     border-bottom: 1px solid var(--dark-primary-color);
     height: 80px;
+}
+.navigation{
+    margin-right: auto;
+}
+.navigation a{
+    font-weight: var(--semiBold);
+    font-size: var(--text5);
 }
 
 .wrap ul{
     display: flex;
     list-style: none;
     justify-content: space-around;
+    align-items: center;
 }
 
 .wrap ul li{

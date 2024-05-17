@@ -1,0 +1,24 @@
+.wrap {
+    position: absolute;
+    left: 100%;
+    top: 0;
+}
+
+.wrap .savedIcon {
+    user-select: none;
+    color: var(--accent-color);
+    font-weight: var(--bold);
+    padding: 14px 21px;
+}
+
+.wrap .savedIconExit {
+    opacity: 1;
+}
+
+.wrap .savedIconExitActive {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+}
+
+

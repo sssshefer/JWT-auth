@@ -4,21 +4,17 @@ import {IResponse} from "../types/IResponse";
 
 
 export const UserApi = {
-    async signup(email:string, password:string) {
-        const timezoneOffset = Math.round(new Date().getTimezoneOffset()/60)*-1
+    async signup(email: string, password: string) {
+        const timezoneOffset = Math.round(new Date().getTimezoneOffset() / 60) * -1
         const {data} = await $host.post('signup', {email, password, timezoneOffset}) as IResponse
         localStorage.setItem('accessToken', data.accessToken)
         return data
     },
 
-    useLogin() {
-        const login = async (email:string, password:string) : Promise<IResponse>=> {
-            let loginResponse = await $host.post('login', {email, password}) as IResponse
-            localStorage.setItem('accessToken', loginResponse.data.accessToken);
-            let getUserResponse = await $authHost.get('getUser') as IResponse
-            return getUserResponse
-        };
-        return login;
+    async login(email: string, password: string): Promise<IResponse> {
+        let {data} = await $host.post('login', {email, password}) as IResponse
+        localStorage.setItem('accessToken', data.data.accessToken);
+        return data
     },
 
     async useUpdateTokens() {
@@ -39,22 +35,27 @@ export const UserApi = {
         return data
     },
 
-    async resendActivationLink(email:string, password:string) {
+    async resendActivationLink(email: string, password: string) {
         const {data} = await $host.post('resendActivationLink', {email, password}) as IResponse
         return data
     },
 
-    async updateFullName(newFullName:string) {
-        const {data} = await $authHost.post(`updateFullName`, {newFullName}) as IResponse
+    async updateFirstName(newFirstName: string) {
+        const {data} = await $authHost.post(`updateFirstName`, {newFirstName}) as IResponse
+        return data
+    },
+    async updateLastName(newLastName: string) {
+        const {data} = await $authHost.post(`updateLastName`, {newLastName}) as IResponse
         return data
     },
 
-    async changePassword(oldPassword:string, newPassword:string) {
+
+    async changePassword(oldPassword: string, newPassword: string) {
         const {data} = await $authHost.post(`changePassword`, {oldPassword, newPassword}) as IResponse
         return data;
     },
 
-    async sendNewPassword(email:string) {
+    async sendNewPassword(email: string) {
         const {data} = await $host.post(`sendNewPassword`, {email}) as IResponse
         return data;
     },

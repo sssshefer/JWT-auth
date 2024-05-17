@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './App.css';
 import Loader from "../shared/ui/Loader/Loader";
 import {UserApi} from "../shared/api/userApi";
-import {IUser} from "../shared/types/IUser";
 import Header from "../widgets/Header/Header";
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./router/AppRouter";
+import UserProvider, {UserContext} from "../shared/store/UserContext";
+
 
 function App() {
     const [loading, setLoading] = useState<boolean>(true)
-    const [user, setUser] = useState<IUser | undefined>(undefined)
+    const {user, setUser} = useContext(UserContext)
 
     useEffect(() => {
         userInit()
@@ -31,7 +32,7 @@ function App() {
 
     return (
         <BrowserRouter>
-            <Header isAuth={!!user}/>
+            <Header isAuth={!!user} menu={[{id:'home', title:'Home', link:'/'}]}/>
             <AppRouter isAuth={!!user}/>
             {/*<div className="App">*/}
             {/*    Account page*/}

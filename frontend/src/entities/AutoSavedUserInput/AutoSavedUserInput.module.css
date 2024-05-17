@@ -1,0 +1,6 @@
+.wrap {
+    position: relative;
+}
+.wrap .property {
+    color: #767676;
+}

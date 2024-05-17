@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import cl from './Login.module.css'
 import {Link, useNavigate} from "react-router-dom";
 import FilteredFormErrors from "../../entities/FilteredFormErrors/FilteredFormErrors";
@@ -9,11 +9,13 @@ import LoginButton from "../../features/LoginButton/LoginButton";
 import RecoverPopup from "../../widgets/PasswordRecoverPopup/PasswordRecoverPopup";
 import {IResponse} from "../../shared/types/IResponse";
 import CustomButton from "../../shared/ui/CustomButton/CustomButton";
+import {UserContext} from "../../shared/store/UserContext";
 
 
 const Login = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const {user, setUser} = useContext(UserContext)
 
     const navigate = useNavigate();
 
@@ -24,18 +26,21 @@ const Login = () => {
     const [loginResponse, setLoginResponse] = useState<IResponse | undefined>(undefined)
 
     useEffect(() => {
+        console.log(loginResponse)
         setConfirmPopupIsVisible(loginResponse?.errors?.some(error => error.fieldName === 'emailActivation') || false)
         if (loginResponse?.success) {
-           navigate('/me')
+            setUser(loginResponse.data.userDetails)
+            navigate('/account')
         }
-    }, [loginResponse?.errors])
+    }, [loginResponse?.success])
     return (
 
         <div className={cl.wrap + " flexCenter"}>
             {confirmPopupIsVisible &&
                 <EmailConfirmPopup email={email} password={password} setPopupIsVisible={setConfirmPopupIsVisible}/>}
             {recoverPopupIsVisible &&
-                <RecoverPopup setPopupIsVisible={setRecoverPopupIsVisible} recoverPasswordResponse={recoverPasswordResponse}/>}
+                <RecoverPopup setPopupIsVisible={setRecoverPopupIsVisible}
+                              recoverPasswordResponse={recoverPasswordResponse}/>}
 
             <form className={cl.form} autoComplete='on'>
                 <h1 className={cl.title}>
@@ -51,8 +56,9 @@ const Login = () => {
                     {loginResponse?.message}
                 </p>
                 <div className={cl.submitButtonWrap}>
-                    <LoginButton email={email} password={password} setResponse={setLoginResponse} className={"customButton"}>
-                            Log in
+                    <LoginButton email={email} password={password} setResponse={setLoginResponse}
+                                 className={"customButton"}>
+                        Log in
                     </LoginButton>
                 </div>
 

@@ -2,6 +2,9 @@ import React, {FC} from 'react';
 import cl from './Header.module.css'
 import {Link} from "react-router-dom";
 import CustomLink from "../../shared/ui/CustomLink/CustomLink";
+import LogOutButton from "../../features/LogOutButton/LogOutButton";
+import {IResponse} from "../../shared/types/IResponse";
+import {IUser} from "../../shared/types/IUser";
 
 export interface IMenuItem {
     id: string,
@@ -12,21 +15,33 @@ export interface IMenuItem {
 
 interface HeaderProps {
     menu?: IMenuItem[],
-    isAuth: boolean
+    isAuth: boolean,
 }
 
 const Header: FC<HeaderProps> = ({menu, isAuth}) => {
+    const pathname = window.location.pathname;
+
     return (
         <div className={cl.wrap}>
             <div className={cl.navigation}>
                 {menu?.map((item: IMenuItem) =>
-                    <div key={item.id}>
+                    <Link to={item.link} key={item.id}>
                         {item.title}
-                    </div>)}
+                    </Link>)}
             </div>
             <div className={cl.registration}>
                 {isAuth ?
-                    <div>Logout</div>
+                    <ul>
+                        <li>
+                            <LogOutButton> Log out </LogOutButton>
+                        </li>
+                        <li>
+                            <CustomLink to={'account'}>
+                                Account
+                            </CustomLink>
+                        </li>
+
+                    </ul>
                     :
                     <ul>
                         <li>
