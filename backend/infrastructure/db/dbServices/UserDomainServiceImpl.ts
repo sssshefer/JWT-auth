@@ -15,28 +15,30 @@ export class UserDomainServiceImpl implements UserDomainService {
         return orm.user.getOne({email});
     }
 
-    async getOne(key:string, value:any) {
-        return orm.user.getOne({key:value});
+    async getOne(key: string, value: any) {
+        return orm.user.getOne({key: value});
     }
 
     async checkUserExists(email: string) {
-        try{
+        try {
             return !!await orm.user.getOne({email});
-        }catch (e){
+        } catch (e) {
             return false;
         }
     }
 
-    async signup(email: string, password: string, timezoneOffset: number, checkEmail:boolean) {
+    async signup(email: string, password: string, timezoneOffset: number, checkEmail: boolean) {
         const hashedPassword = bcrypt.hashSync(password, 7);
-        const activationLink = v4()//random id for activation link
+        const activationLink = v4() //random id for activation link
         const user = {
             email: email,
             password: hashedPassword,
             activationLink: activationLink,
             timezoneOffset: timezoneOffset,
-            isActivated:!checkEmail
+            isActivated: !checkEmail
         }
+
+        console.log(777, user)
         return await orm.user.create(user);
     }
 
@@ -46,7 +48,7 @@ export class UserDomainServiceImpl implements UserDomainService {
             throw ApiError.WrongActivationLinkError()
         }
         //update isActivated of the user
-        await orm.user.findAndUpdate({email:user.email}, {isActivated:true});
+        await orm.user.findAndUpdate({email: user.email}, {isActivated: true});
     }
 
     async updateUserLogs(email: string) {
@@ -70,10 +72,10 @@ export class UserDomainServiceImpl implements UserDomainService {
     }
 
     async removeSubscription(email: string) {
-       await orm.user.findAndUpdate({email}, {subscriptionStatus: 'Free'});
+        await orm.user.findAndUpdate({email}, {subscriptionStatus: 'Free'});
     }
 
-    async validateStrike(email:string) {
+    async validateStrike(email: string) {
         const user = await orm.user.getOne({email});
 
         let userCurrentDate = new Date();
@@ -93,7 +95,7 @@ export class UserDomainServiceImpl implements UserDomainService {
         }
 
         if (checkAddStrike) {
-            await orm.user.findAndIncrementValue({"email":user.email}, 'strike', 1);
+            await orm.user.findAndIncrementValue({"email": user.email}, 'strike', 1);
         }
     }
 
@@ -102,14 +104,14 @@ export class UserDomainServiceImpl implements UserDomainService {
     }
 
 
-    async validateSubscriptionStatus(email:string) {
+    async validateSubscriptionStatus(email: string) {
         const user = await orm.user.getOne({email});
         if (user.subscriptionStatus === 'Paid' && !(await this.checkSubscription(user.endOfSubscription))) {
             await this.removeSubscription(email);
         }
     }
 
-    async update(email:string, newData:{}){
-       await orm.user.findAndUpdate({email}, newData)
+    async update(email: string, newData: {}) {
+        await orm.user.findAndUpdate({email}, newData)
     }
 }

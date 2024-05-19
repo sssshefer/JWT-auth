@@ -9,7 +9,7 @@ interface CustomLinkProps extends React.HTMLProps<HTMLAnchorElement>{
 
 const CustomLink: FC<CustomLinkProps> = ({children, to, ...props}) => {
     return (
-        <Link to={to} {...props} className={cl.wrap}>
+        <Link to={to} {...props} className={"customButton"}>
             {children}
         </Link>
     );

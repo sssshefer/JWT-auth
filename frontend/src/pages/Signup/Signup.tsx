@@ -13,14 +13,14 @@ const Signup = () => {
     const [popupIsVisible, setPopupIsVisible] = useState<boolean>(false)
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState('');
-    const [skipEmailVerification, setSkipEmailVerification] = useState<boolean>(true)
+    const [skipEmailVerification, setSkipEmailVerification] = useState<boolean>(false)
     const [response, setResponse] = useState<IResponse | undefined>(undefined);
 
     useEffect(() => {
-        console.log(111111, response)
+        console.log(response)
         setPopupIsVisible(response?.success || false)
 
-    }, [response?.success])
+    }, [response])
 
     return (
         <div className={cl.wrap}>
@@ -36,7 +36,9 @@ const Signup = () => {
                     <PasswordInput setPassword={setPassword} errors={response?.errors}/>
                 </div>
                 <div className={cl.emailCheckboxWrap}>
-                    <CustomCheckbox name={'emailConfirmation'} labelText={'Turn off email confirmation for testing purpose'} setCheckbox={setSkipEmailVerification}/>
+                    <CustomCheckbox name={'emailConfirmation'}
+                                    labelText={'Turn off email confirmation for testing purpose'}
+                                    setCheckbox={setSkipEmailVerification}/>
                 </div>
                 <h6 className={cl.licenseAgreement}>By signing up, you agree to our <Link
                     to={'/terms-of-use'} target="_blank">Terms of Use</Link> and <Link
@@ -46,7 +48,7 @@ const Signup = () => {
                 {/*</p>*/}
                 <div className={cl.registrationButtonWrap}>
                     <SignupButton email={email} password={password} setResponse={setResponse}
-                                  className={"customButton"} checkEmail={!skipEmailVerification}>Sign up</SignupButton>
+                                  className={"customButton"} skipEmailVerification={skipEmailVerification}>Sign up</SignupButton>
                 </div>
                 <p className={cl.loginLinkWrap}>
                     Already have an account? <Link to={'/login'} className={cl.loginLink}>Log in</Link>

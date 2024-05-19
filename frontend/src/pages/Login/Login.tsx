@@ -19,6 +19,7 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const [openRecoverPasswordButton, setOpenRecoverPasswordButton] = useState<boolean>(false)
     const [confirmPopupIsVisible, setConfirmPopupIsVisible] = useState<boolean>(false)
     const [recoverPopupIsVisible, setRecoverPopupIsVisible] = useState<boolean>(false)
 
@@ -61,14 +62,23 @@ const Login = () => {
                         Log in
                     </LoginButton>
                 </div>
-
-                <div className={cl.sendNewPasswordButtonWrap}>
-                    <RecoverPasswordButton email={email} setRecoverPasswordResponse={setRecoverPasswordResponse}
-                                           setRecoverPopupIsVisible={setRecoverPopupIsVisible}
-                                           className={"customButton"}>
-                        Recover password
-                    </RecoverPasswordButton>
+                <div className={cl.sendNewPasswordWrap}>
+                    <button className={cl.sendNewPasswordOpenText}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setOpenRecoverPasswordButton(!openRecoverPasswordButton)
+                            }}>I
+                        forgot my password
+                    </button>
+                    {openRecoverPasswordButton&&<div className={cl.sendNewPasswordButtonWrap}>
+                        <RecoverPasswordButton email={email} setRecoverPasswordResponse={setRecoverPasswordResponse}
+                                               setRecoverPopupIsVisible={setRecoverPopupIsVisible}
+                                               className={"customButton"}>
+                           Send new to email
+                        </RecoverPasswordButton>
+                    </div>}
                 </div>
+
                 <p className={cl.signupLinkWrap}>
                     Not a member yet? <Link to={'/signup'} className={cl.signupLink}>Sign up for free</Link>
                 </p>

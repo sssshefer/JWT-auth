@@ -1,4 +1,4 @@
-.wrap{
+.wrap {
     display: flex;
     align-items: center;
     padding: 10px 80px;
@@ -6,21 +6,23 @@
     border-bottom: 1px solid var(--dark-primary-color);
     height: 80px;
 }
-.navigation{
+
+.navigation {
     margin-right: auto;
 }
-.navigation a{
+
+.wrap a {
     font-weight: var(--semiBold);
-    font-size: var(--text4);
+    font-size: 18px;
 }
 
-.wrap ul{
+.wrap ul {
     display: flex;
     list-style: none;
     justify-content: space-around;
     align-items: center;
 }
 
-.wrap ul li{
+.wrap ul li {
     margin: 0 10px;
 }

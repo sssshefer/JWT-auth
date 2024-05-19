@@ -6,6 +6,7 @@
     border: 1px solid var(--dark-primary-color);
     width: 365px;
     padding: 37px 44px 27px;
+    border-radius: 5px;
 }
 
 .title {
@@ -27,6 +28,7 @@
     font-weight: var(--regular);
     font-family: Verdana, sans-serif, Arial;
     letter-spacing: 0.125em;
+    border-radius: 5px;
 }
 
 
@@ -49,23 +51,20 @@
 }
 
 .submitButtonWrap > button {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .submitButtonWrap button {
-    border-radius: 0;
     width: 100%;
 }
 
-.signupLinkWrap {
-    font-weight: var(--semiBold);
-    margin-top: 20px;
-    font-size: var(--text6);
-}
+.sendNewPasswordWrap{
 
-.signupLink {
-    display: inline-block;
-    font-weight: var(--semiBold);
+}
+.sendNewPasswordOpenText{
+    color:var(--accent-color);
+    font-size: var(--text6);
+    margin-bottom: 10px;
 }
 
 .sendNewPasswordButtonWrap {
@@ -74,10 +73,18 @@
 
 .sendNewPasswordButtonWrap > button {
     font-size: var(--text6);
-    border-radius: 0;
     width: 100%;
 }
 
+.signupLinkWrap {
+    font-weight: var(--semiBold);
+    font-size: var(--text6);
+}
+
+.signupLink {
+    display: inline-block;
+    font-weight: var(--semiBold);
+}
 
 @media screen and (max-width: 576px) {
     .title {

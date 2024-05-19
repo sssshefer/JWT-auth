@@ -5,10 +5,13 @@ import {accentColor} from "../../shared/ui/styles/styles";
 import {UserContext} from "../../shared/store/UserContext";
 import AutoSavedUserInput from "../../entities/AutoSavedUserInput/AutoSavedUserInput";
 import {UserApi} from "../../shared/api/userApi";
+import CustomButton from "../../shared/ui/CustomButton/CustomButton";
+import ChangePasswordPopup from "../../widgets/ChangePasswordPopup/ChangePasswordPopup";
 
 
 const Account = () => {
     const {user, setUser} = useContext(UserContext)
+    const [changePasswordPopupIsVisible, setChangePasswordPopupIsVisible] = useState<boolean>(false)
 
     return (
         <div className={cl.wrap}>
@@ -66,6 +69,11 @@ const Account = () => {
                 </tbody>
             </table>
 
+            <CustomButton onClick={() => setChangePasswordPopupIsVisible(true)}>
+                Change password
+            </CustomButton>
+            {changePasswordPopupIsVisible &&
+                <ChangePasswordPopup setPopupIsVisible={setChangePasswordPopupIsVisible}/>}
         </div>
     );
 };

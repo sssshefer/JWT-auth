@@ -19,7 +19,7 @@
     width: 430px;
     height: auto;
     background: var(--light-primary-color);
-    padding: 30px 40px;
+    padding: 30px 40px 10px;
     flex-direction: column;
     box-shadow: 0 4px 10px 4px #00000040;
 }
@@ -44,6 +44,9 @@
     display: inline-block;
 }
 
+.text{
+    margin-bottom: 24px;
+}
 .loader {
     text-align: left;
     margin-bottom: 30px;
@@ -107,7 +110,7 @@
 
 .failedLoginIcon {
      height: 20px;
-     margin: 15px 10px 0;
+     margin: 10px 10px 0;
  }
 
 .failedLoginIcon h6{

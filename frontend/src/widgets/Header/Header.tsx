@@ -3,14 +3,11 @@ import cl from './Header.module.css'
 import {Link} from "react-router-dom";
 import CustomLink from "../../shared/ui/CustomLink/CustomLink";
 import LogOutButton from "../../features/LogOutButton/LogOutButton";
-import {IResponse} from "../../shared/types/IResponse";
-import {IUser} from "../../shared/types/IUser";
 
 export interface IMenuItem {
     id: string,
     title: string
     link: string
-
 }
 
 interface HeaderProps {
@@ -55,7 +52,6 @@ const Header: FC<HeaderProps> = ({menu, isAuth}) => {
                         </li>
                     </ul>}
             </div>
-
         </div>
     );
 };

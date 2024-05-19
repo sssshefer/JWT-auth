@@ -27,6 +27,7 @@ export class UserController {
             if (!errors.isEmpty()) return next(MyError.inputErrors( errors.array()))
 
             let {email, password, timezoneOffset, checkEmail} = req.body;
+            console.log(10, checkEmail)
             email = email.toLowerCase().trim()
 
             const userExists = await this.userService.checkUserExists(email)
@@ -34,7 +35,6 @@ export class UserController {
             if (userExists) {
                 return next(MyError.inputErrors( [{msg:`Email ${email} is taken`, path:'email'}]))
             }
-            console.log(999, checkEmail)
             const user = await this.userService.signup(email, password, timezoneOffset, checkEmail)
             const userForTransfer = UserTokenDto.fromUser(user)
             if (checkEmail)
@@ -57,7 +57,6 @@ export class UserController {
     async login(req: Request, res: Response, next: NextFunction) {
         try {
             const errors = validationResult(req)
-            console.log(errors.array()[0])
             if (!errors.isEmpty()) {
                 return next(MyError.inputErrors( errors.array()))
             }
@@ -221,24 +220,16 @@ export class UserController {
                 return next(MyError.inputErrors( errors.array()))
             }
             const email = req.body.user.email;
-            const oldPassword = req.body.oldPassword;
-            if (!oldPassword) {
-                return next(MyError.inputError('Password can not be empty',  'oldPassword'))
-            }
-            const newPassword = req.body.newPassword;
-            if (newPassword.length <= 7 || newPassword.length >= 24) {
-                return next(MyError.inputError('Password must has between 8 and 24 characters',  'newPassword'))
-            }
+            const {oldPassword, newPassword} = req.body;
             if (oldPassword === newPassword) {
                 return next(MyError.inputError('Passwords are the same',  'newPassword'))
             }
-
             const verification = await this.userService.checkPassword(email, oldPassword)
             if (!verification) {
                 return next(MyError.inputError('Incorrect password',  'oldPassword'))
             }
 
-            //await this.userService.setNewPassword(email, newPassword)
+            await this.userService.setNewPassword(email, newPassword)
             const user = await this.userService.getOneByEmail(email)
             await this.tokenService.removeAllUserTokens(user._id)
             await this.emailService.sendPasswordIsChangedMail(email)

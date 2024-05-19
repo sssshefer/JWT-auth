@@ -1,6 +1,6 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useLayoutEffect, useState} from 'react';
 import cl from './EmailConfirmPopup.module.css'
-import CustomButton  from "../../shared/ui/CustomButton/CustomButton";
+import CustomButton from "../../shared/ui/CustomButton/CustomButton";
 import {UserApi} from "../../shared/api/userApi";
 import {useNavigate} from "react-router-dom";
 import Timer from "../../entities/Timer/Timer";
@@ -16,25 +16,26 @@ interface EmailConfirmPopupProps {
     setPopupIsVisible: React.Dispatch<React.SetStateAction<boolean>>
 
 }
-const EmailConfirmPopup:FC<EmailConfirmPopupProps> = ({email, password, setPopupIsVisible}) => {
+
+const EmailConfirmPopup: FC<EmailConfirmPopupProps> = ({email, password, setPopupIsVisible}) => {
 
     const navigate = useNavigate();
     const [showFailedLoginIcon, setShowFailedLoginIcon] = useState<boolean>(false)
-    const [response, setResponse] = useState<IResponse|undefined>(undefined)
+    const [response, setResponse] = useState<IResponse | undefined>(undefined)
     const {user, setUser} = useContext(UserContext)
 
-    useEffect(() => {
-        if(response?.success){
+    useLayoutEffect(() => {
+        if (response?.success) {
             setStartTimer(false)
             setUser(response.data.userDetails)
             navigate('/account')
         }
-        if (!response?.success)
+        if (response && !response.success)
             if (!showFailedLoginIcon) {
                 setShowFailedLoginIcon(true)
                 timeout = setTimeout(() => setShowFailedLoginIcon(false), 800)
             }
-    }, [response?.success])
+    }, [response])
 
     let timeout;
 
@@ -48,9 +49,10 @@ const EmailConfirmPopup:FC<EmailConfirmPopupProps> = ({email, password, setPopup
             console.log(e)
         }
     }
+
     return (
-        <div className={cl.wrap} onClick={()=>setPopupIsVisible(false)}>
-            <div className={cl.popupWrap} onClick={(e)=>e.stopPropagation()}>
+        <div className={cl.wrap} onClick={() => setPopupIsVisible(false)}>
+            <div className={cl.popupWrap} onClick={(e) => e.stopPropagation()}>
                 <button className={cl.exitButton} onClick={() => setPopupIsVisible(false)}>x</button>
                 <div className={cl.titleWrap}>
                     <h3 className={cl.title}>Verify your account </h3>
@@ -59,27 +61,22 @@ const EmailConfirmPopup:FC<EmailConfirmPopupProps> = ({email, password, setPopup
                 <h6 className={cl.text}>Activation link has been sent to your email address </h6>
                 <div className={cl.buttonsWrap}>
                     <div className={cl.loginButtonWrap}>
-                        <LoginButton  email={email} password={password}
-                                     setResponse={setResponse}>
-                            <CustomButton>
-                                Log in
-                            </CustomButton>
+                        <LoginButton email={email} password={password}
+                                     setResponse={setResponse} className={'customButton'}>
+                            Log in
                         </LoginButton>
                         <span className={cl.failedLoginIcon}>{showFailedLoginIcon && <h6>not verified</h6>}</span>
 
                     </div>
                     <div className={cl.resendButtonWrap}>
-                        <span
-                            className={cl.timerWrap}> {startTimer && <Timer setStart={setStartTimer} start={startTimer}
-                                                                            secondsNumber={60}/>}</span>
-                        <CustomButton className="accentOutline" onClick={(e) => {
-                            !startTimer && handleResend()
-                        }} style={startTimer ? {
-                            borderColor: 'grey',
-                            color: 'grey',
-                            cursor: 'default'
-                        } : {color: 'var(--lilac)'}}
-                                              type='button'>Resend</CustomButton>
+                        <span className={cl.timerWrap}>
+                            {startTimer && <Timer setStart={setStartTimer} start={startTimer} secondsNumber={60}/>}
+                        </span>
+                        <CustomButton disabled={startTimer} className={`accentOutline ${startTimer ? 'disabled' : ''}`}
+                                      onClick={(e) => {
+                                          !startTimer && handleResend()
+                                      }}
+                                      type='button'>Resend</CustomButton>
                     </div>
                 </div>
             </div>
