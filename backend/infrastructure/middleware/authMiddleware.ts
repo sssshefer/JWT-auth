@@ -1,5 +1,5 @@
-import ApiError from '../exceptions/apiError';
-import MyValidationError from '../exceptions/myValidationError';
+import ApiError from '../exceptions/ApiError';
+import MyError from '../exceptions/MyError';
 import {Request,Response, NextFunction} from 'express';
 import {IRequestWithServices} from "./exproseServices/exposeServices";
 
@@ -31,7 +31,7 @@ export default async function (req:Request, res:Response, next:NextFunction) {
             return next(ApiError.UnauthorizedError());
         }
         if(userFromToken.roles === 'BANNED'){
-            next(MyValidationError.inputError('Your email is banned', [], 'email'))
+            next(MyError.inputError('Your email is banned',  'email'))
         }
 
         modifiedReq.body.user = userFromToken

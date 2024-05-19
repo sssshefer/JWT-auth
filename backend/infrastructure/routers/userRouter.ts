@@ -11,7 +11,7 @@ router.post('/api/signup', [
     check('email', "Incorrect email format").isEmail(),
     check('password', "Password must has between 8 and 24 characters").isLength({min: 7, max: 24}),
     check('timezoneOffset', "Timezone must be integer between -12 and 12").isInt({min: -12, max: 12}),
-], userController.registration.bind(userController))
+], userController.signup.bind(userController))
 router.post('/api/login', [
     check('email', "Email is required").notEmpty(),
     check('email', "Incorrect email format").isEmail(),

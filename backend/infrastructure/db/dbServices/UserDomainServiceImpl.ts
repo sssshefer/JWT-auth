@@ -1,7 +1,7 @@
 import UserDomainService from "../../../core/domainService/UserDomainService";
 import bcrypt from "bcryptjs";
 import {v4} from "uuid";
-import ApiError from "../../exceptions/apiError";
+import ApiError from "../../exceptions/ApiError";
 
 //TODO Remove dependence from orm
 import {MongoOrm as orm} from "../orm/MongoOrm";
@@ -28,7 +28,7 @@ export class UserDomainServiceImpl implements UserDomainService {
     }
 
 
-    async register(email: string, password: string, timezoneOffset: number) {
+    async signup(email: string, password: string, timezoneOffset: number, checkEmail:boolean) {
         const hashedPassword = bcrypt.hashSync(password, 7);
         const activationLink = v4()//random id for activation link
         const user = {
@@ -36,6 +36,7 @@ export class UserDomainServiceImpl implements UserDomainService {
             password: hashedPassword,
             activationLink: activationLink,
             timezoneOffset: timezoneOffset,
+            isActivated:!checkEmail
         }
         return await orm.user.create(user);
     }

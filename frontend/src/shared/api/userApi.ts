@@ -4,9 +4,9 @@ import {IResponse} from "../types/IResponse";
 
 
 export const UserApi = {
-    async signup(email: string, password: string) {
+    async signup(email: string, password: string, checkEmail:boolean) {
         const timezoneOffset = Math.round(new Date().getTimezoneOffset() / 60) * -1
-        const {data} = await $host.post('signup', {email, password, timezoneOffset}) as IResponse
+        const {data} = await $host.post('signup', {email, password, timezoneOffset, checkEmail}) as IResponse
         localStorage.setItem('accessToken', data.accessToken)
         return data
     },

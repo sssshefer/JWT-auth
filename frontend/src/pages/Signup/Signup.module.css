@@ -15,7 +15,9 @@
     margin-bottom: 25px;
     font-size: var(--text4)
 }
-
+.emailCheckboxWrap{
+    margin-bottom: 15px;
+}
 .inputsWrap {
     margin-bottom: 15px;
 }

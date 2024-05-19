@@ -9,7 +9,7 @@ export default interface UserDomainService {
 
     getOneByEmail(email: string): Promise<User>;
 
-    register(email: string, password: string, timezoneOffset: number): Promise<User>;
+    signup(email: string, password: string, timezoneOffset: number, checkEmail:boolean): Promise<User>;
 
     activate(activationLink: string): Promise<void>;
 

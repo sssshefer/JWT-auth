@@ -1,0 +1,12 @@
+.wrap{
+
+}
+
+.wrap input[type="checkbox"] {
+    accent-color: var(--accent-color);
+}
+
+.wrap label{
+    margin-left: 5px;
+    font-weight: var(--semiBold);
+}

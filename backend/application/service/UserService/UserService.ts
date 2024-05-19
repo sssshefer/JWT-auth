@@ -1,8 +1,4 @@
 import UserDomainService from "../../../core/domainService/UserDomainService";
-import {User} from "../../../core/domain/User/User";
-import bcrypt from "bcryptjs";
-import uuid from "uuid";
-import RegisterUserDto from "../../dtos/RegisterUserDto";
 
 export default class UserService {
     constructor(readonly userDomainService: UserDomainService) {}
@@ -15,16 +11,13 @@ export default class UserService {
         return this.userDomainService.getOne(key, value);
     }
 
-
     async getOneByEmail(email: string) {
         return this.userDomainService.getOneByEmail(email);
     };
 
-    async register(email:string, password:string, timezoneOffset:number){
-        return this.userDomainService.register(email, password, timezoneOffset);
+    async signup(email:string, password:string, timezoneOffset:number, checkEmail:boolean){
+        return this.userDomainService.signup(email, password, timezoneOffset, checkEmail);
     };
-
-
 
     async checkUserExists(email: string) {
         return this.userDomainService.checkUserExists(email);
@@ -40,7 +33,6 @@ export default class UserService {
     async checkPassword(email: string, password: string) {
         return this.userDomainService.checkPassword(email, password);
     };
-
 
     async setNewPassword(email: string, newPassword: string) {
         return this.userDomainService.setNewPassword(email, newPassword);

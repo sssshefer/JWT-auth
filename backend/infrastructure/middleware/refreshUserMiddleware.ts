@@ -1,4 +1,4 @@
-import ApiError from "../exceptions/apiError";
+import ApiError from "../exceptions/ApiError";
 import {NextFunction, Response, Request} from 'express';
 import {IRequestWithServices} from "./exproseServices/exposeServices";
 

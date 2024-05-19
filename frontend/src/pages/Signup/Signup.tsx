@@ -1,21 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import cl from "../Signup/Signup.module.css";
 import {Link} from "react-router-dom";
-import {UserApi} from "../../shared/api/userApi";
 import FilteredFormErrors from "../../entities/FilteredFormErrors/FilteredFormErrors";
 import EmailConfirmPopup from "../../widgets/EmailConfirmPopup/EmailConfirmPopup";
 import PasswordInput from "../../entities/PasswordInput/PasswordInput";
-import CustomButton from "../../shared/ui/CustomButton/CustomButton";
 import {IResponse} from "../../shared/types/IResponse";
-import {unexpectedErrorResponse} from "../../shared/consts/errors";
 import SignupButton from "../../features/SignupButton/SignupButton";
+import CustomCheckbox from "../../shared/ui/CustomCheckbox/CustomCheckbox";
 
 
 const Signup = () => {
-    const [popupIsVisible, setPopupIsVisible] = useState(false)
-    const [email, setEmail] = useState('');
+    const [popupIsVisible, setPopupIsVisible] = useState<boolean>(false)
+    const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState('');
-
+    const [checkEmail, setCheckEmail] = useState<boolean>(true)
     const [response, setResponse] = useState<IResponse | undefined>(undefined);
 
     useEffect(() => {
@@ -35,6 +33,9 @@ const Signup = () => {
                     <FilteredFormErrors errors={response?.errors} type="email"/>
                     <PasswordInput setPassword={setPassword} errors={response?.errors}/>
                 </div>
+                <div className={cl.emailCheckboxWrap}>
+                    <CustomCheckbox name={'emailConfirmation'} labelText={'Turn off email confirmation for testing purpose'} setCheckbox={setCheckEmail}/>
+                </div>
                 <h6 className={cl.licenseAgreement}>By signing up, you agree to our <Link
                     to={'/terms-of-use'} target="_blank">Terms of Use</Link> and <Link
                     to={'/privacy-policy'} target="_blank">Privacy Policy</Link></h6>
@@ -43,7 +44,7 @@ const Signup = () => {
                 </p>
                 <div className={cl.registrationButtonWrap}>
                     <SignupButton email={email} password={password} setResponse={setResponse}
-                                  className={"customButton"}>Sign up</SignupButton>
+                                  className={"customButton"} checkEmail={checkEmail}>Sign up</SignupButton>
                 </div>
                 <p className={cl.loginLinkWrap}>
                     Already have an account? <Link to={'/login'} className={cl.loginLink}>Log in</Link>
