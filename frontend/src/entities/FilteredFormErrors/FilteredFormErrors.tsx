@@ -8,13 +8,13 @@ interface IFilteredErrorsProps {
 }
 
 const FilteredFormErrors:FC<IFilteredErrorsProps> = ({errors, type, ...props}) => {
-    const isShown = errors?.find(formError => formError.fieldName === type)?.message;
+    const isShown = errors?.find(formError => formError.path === type)?.msg;
     if (!isShown) {
         return (<div style={{display: 'none'}}></div>)
     }
     return (
         <p {...props} className={"error"}>
-            {errors.find(error => error.fieldName === type)?.message}
+            {errors.find(error => error.path === type)?.msg}
         </p>
     );
 };

@@ -1,12 +1,8 @@
 import {IMyValidationError} from "./types/IMyValidationError";
 
-export const FieldValidationError = (message: string, fieldName: string) => {
-
-}
-
 //todo implement response as class and error will be a subclass of response
 class MyError extends Error {
-    success;
+    success;//todo remove success and put to parent class Response
     code;
     errors;
 

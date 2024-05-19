@@ -2,9 +2,10 @@ import React, {FC} from 'react';
 import {UserApi} from "../../shared/api/userApi";
 import {IResponse} from "../../shared/types/IResponse";
 import {unexpectedErrorResponse} from "../../shared/consts/errors";
+import {AxiosError} from "axios";
 
 interface LoginButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    setResponse: React.Dispatch<IResponse>,
+    setResponse: React.Dispatch<IResponse|undefined>,
     email: string,
     password: string,
 }
@@ -13,11 +14,12 @@ const LoginButton: FC<LoginButtonProps> = ({setResponse, email, password, childr
 
     const handleLoginSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        setResponse(undefined)
         try {
             const response = await UserApi.login(email, password)
             setResponse(response)
-        }catch (e) {
-            setResponse(unexpectedErrorResponse)
+        }catch (err:any) {
+            setResponse(err.response.data)
         }
     }
 

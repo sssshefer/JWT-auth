@@ -16,10 +16,9 @@ const SignupButton: FC<SignupButtonProps> = ({setResponse, email, password, chec
         try {
             const response = await UserApi.signup(email, password, checkEmail)
             setResponse(response)
-
-        } catch (e) {
-            setResponse(unexpectedErrorResponse)
-            console.log(e)
+        } catch (err:any){
+            setResponse(err.response.data)
+            console.log(err)
         }
 
     }

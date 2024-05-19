@@ -27,7 +27,6 @@ export class UserDomainServiceImpl implements UserDomainService {
         }
     }
 
-
     async signup(email: string, password: string, timezoneOffset: number, checkEmail:boolean) {
         const hashedPassword = bcrypt.hashSync(password, 7);
         const activationLink = v4()//random id for activation link
@@ -40,8 +39,6 @@ export class UserDomainServiceImpl implements UserDomainService {
         }
         return await orm.user.create(user);
     }
-
-
 
     async activate(activationLink: string) {
         const user = await orm.user.getOne({activationLink})

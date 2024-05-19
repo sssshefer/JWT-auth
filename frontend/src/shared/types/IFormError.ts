@@ -1,4 +1,4 @@
 export interface IFormError {
-    message: string;
-    fieldName?: string;
+    msg: string;
+    path?: string;
 }

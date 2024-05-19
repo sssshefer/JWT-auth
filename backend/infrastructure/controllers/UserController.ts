@@ -26,7 +26,6 @@ export class UserController {
             const errors = validationResult(req)
             if (!errors.isEmpty()) return next(MyError.inputErrors( errors.array()))
 
-
             let {email, password, timezoneOffset, checkEmail} = req.body;
             email = email.toLowerCase().trim()
 
@@ -35,6 +34,7 @@ export class UserController {
             if (userExists) {
                 return next(MyError.inputErrors( [{msg:`Email ${email} is taken`, path:'email'}]))
             }
+            console.log(999, checkEmail)
             const user = await this.userService.signup(email, password, timezoneOffset, checkEmail)
             const userForTransfer = UserTokenDto.fromUser(user)
             if (checkEmail)
@@ -45,11 +45,10 @@ export class UserController {
                 maxAge: 15 * 24 * 60 * 60 * 1000,
                 httpOnly: true
             })
-            const sessionDataForTransfer = {
-                accessToken: tokens.accessToken,
-                userDetails: user
-            }
-            return res.json(sessionDataForTransfer)
+
+            const sessionDataForTransfer = {accessToken: tokens.accessToken, userDetails: userForTransfer}
+            const response = successResponseMapper(sessionDataForTransfer)
+            return res.json(response)
         } catch (e) {
             next(e);
         }
@@ -72,8 +71,12 @@ export class UserController {
             }
             let user = await this.userService.getOneByEmail(email)
 
-            if (userExists) await this.userService.checkPassword(email, password)
+            const passwordIsValid = await this.userService.checkPassword(email, password)
 
+            if(!passwordIsValid){
+                return next(MyError.inputError( 'Invalid password',  'password'))
+
+            }
             const userForTransfer = UserTokenDto.fromUser(user)
 
             if (!user.isActivated) {
@@ -192,7 +195,7 @@ export class UserController {
             await this.userService.update(email, {firstName: newFirstName});
             const user = await this.userService.getOneByEmail(email)
             const userForTransfer = UserTokenDto.fromUser(user);
-            return res.json(userForTransfer);
+            return res.json(successResponseMapper(userForTransfer))
         } catch (e) {
             next(e)
         }
@@ -205,7 +208,7 @@ export class UserController {
             await this.userService.update(email, {lastName: newLastName});
             const user = await this.userService.getOneByEmail(email)
             const userForTransfer = UserTokenDto.fromUser(user);
-            return res.json(userForTransfer);
+            return res.json(successResponseMapper(userForTransfer))
         } catch (e) {
             next(e)
         }
@@ -240,7 +243,7 @@ export class UserController {
             await this.tokenService.removeAllUserTokens(user._id)
             await this.emailService.sendPasswordIsChangedMail(email)
             res.clearCookie('refreshToken');
-            return res.json({});
+            return res.json(successResponseMapper())
         } catch (e) {
             next(e)
         }
@@ -259,7 +262,7 @@ export class UserController {
             await this.tokenService.removeAllUserTokens(user._id)
             const userForTransfer = UserTokenDto.fromUser(user);
             res.clearCookie('refreshToken');
-            return res.json(userForTransfer);
+            return res.json(successResponseMapper())
         } catch (e) {
             next(e)
         }

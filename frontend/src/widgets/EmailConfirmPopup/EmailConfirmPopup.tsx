@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import cl from './EmailConfirmPopup.module.css'
 import CustomButton  from "../../shared/ui/CustomButton/CustomButton";
 import {UserApi} from "../../shared/api/userApi";
@@ -8,6 +8,7 @@ import EmailIcon from "../../shared/ui/icons/EmailIcon";
 import LoginButton from "../../features/LoginButton/LoginButton";
 import {IResponse} from "../../shared/types/IResponse";
 import {accentColor} from "../../shared/ui/styles/styles";
+import {UserContext} from "../../shared/store/UserContext";
 
 interface EmailConfirmPopupProps {
     email: string,
@@ -20,23 +21,22 @@ const EmailConfirmPopup:FC<EmailConfirmPopupProps> = ({email, password, setPopup
     const navigate = useNavigate();
     const [showFailedLoginIcon, setShowFailedLoginIcon] = useState<boolean>(false)
     const [response, setResponse] = useState<IResponse|undefined>(undefined)
+    const {user, setUser} = useContext(UserContext)
 
     useEffect(() => {
         if(response?.success){
-            handleLogin()
+            setStartTimer(false)
+            setUser(response.data.userDetails)
+            navigate('/account')
         }
         if (!response?.success)
             if (!showFailedLoginIcon) {
                 setShowFailedLoginIcon(true)
                 timeout = setTimeout(() => setShowFailedLoginIcon(false), 800)
             }
-    }, [response?.errors])
+    }, [response?.success])
 
     let timeout;
-    const handleLogin = async () => {
-        setStartTimer(false)
-        navigate('/me')
-    };
 
     const [startTimer, setStartTimer] = useState(true)
 

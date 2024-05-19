@@ -19,7 +19,6 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({menu, isAuth}) => {
-    const pathname = window.location.pathname;
 
     return (
         <div className={cl.wrap}>

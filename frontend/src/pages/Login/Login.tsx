@@ -27,7 +27,7 @@ const Login = () => {
 
     useEffect(() => {
         console.log(loginResponse)
-        setConfirmPopupIsVisible(loginResponse?.errors?.some(error => error.fieldName === 'emailActivation') || false)
+        setConfirmPopupIsVisible(loginResponse?.errors?.some(error => error.path === 'emailActivation') || false)
         if (loginResponse?.success) {
             setUser(loginResponse.data.userDetails)
             navigate('/account')
@@ -53,7 +53,7 @@ const Login = () => {
                     <PasswordInput setPassword={setPassword} errors={loginResponse?.errors}/>
                 </div>
                 <p className="error">
-                    {loginResponse?.message}
+                    {/*loginResponse?.message}*/}
                 </p>
                 <div className={cl.submitButtonWrap}>
                     <LoginButton email={email} password={password} setResponse={setLoginResponse}

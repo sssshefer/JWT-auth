@@ -48,14 +48,12 @@ interface RecoverPasswordButtonProps extends React.ButtonHTMLAttributes<HTMLButt
 }
 
 const RecoverPasswordButton: FC<RecoverPasswordButtonProps> = ({
-                                                       email,
-                                                       setRecoverPopupIsVisible,
-                                                       setRecoverPasswordResponse,
-                                                       children,
-                                                       ...props
-                                                   }) => {
-
-
+                                                                   email,
+                                                                   setRecoverPopupIsVisible,
+                                                                   setRecoverPasswordResponse,
+                                                                   children,
+                                                                   ...props
+                                                               }) => {
     const handleSendNewPassword = async (e: React.MouseEvent<HTMLButtonElement>) => {
         try {
             e.preventDefault()

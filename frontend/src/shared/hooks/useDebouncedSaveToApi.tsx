@@ -6,7 +6,7 @@ interface UseDebouncedSaveToApiProps {
     (apiMethod: Function,
      propertyValue: any,
      debounceTime: number,
-     shownIconTime: number): [boolean, IResponse]
+     shownIconTime: number): [boolean, IResponse|undefined]
 }
 
 export const useDebouncedSaveToApi: UseDebouncedSaveToApiProps = (apiMethod, propertyValue, debounceTime, shownIconTime) => {
@@ -22,7 +22,7 @@ export const useDebouncedSaveToApi: UseDebouncedSaveToApiProps = (apiMethod, pro
         }
 
         async function handleSaveProperty() {
-            const response = apiMethod(debouncedDataToSend)
+            const response = await apiMethod(debouncedDataToSend)
             setResponse(response)
             setShowSavedIcon(true)
             setTimeout(() => {
@@ -31,5 +31,5 @@ export const useDebouncedSaveToApi: UseDebouncedSaveToApiProps = (apiMethod, pro
         }
 
     }, [debouncedDataToSend])
-    return [showSavedIcon, debouncedDataToSend];
+    return [showSavedIcon, response];
 }

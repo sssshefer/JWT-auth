@@ -11,11 +11,3 @@ export function successResponseMapper(data?:any) {
     }
 }
 
-export function formErrorResponseMapper(formErrors:IFormError[]) {
-    return {
-        message:'Form error',
-        success: false,
-        code: 401,
-        errors: formErrors,
-    }
-}

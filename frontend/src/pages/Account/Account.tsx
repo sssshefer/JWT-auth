@@ -9,9 +9,7 @@ import {UserApi} from "../../shared/api/userApi";
 
 const Account = () => {
     const {user, setUser} = useContext(UserContext)
-    useEffect(() => {
-        console.log(user)
-    },[])
+
     return (
         <div className={cl.wrap}>
             {/*{<UserDetails user={user}/>}*/}

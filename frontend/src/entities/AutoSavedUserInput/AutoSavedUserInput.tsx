@@ -18,7 +18,7 @@ const AutoSavedUserInput:FC<AutoSavedUserInputProps> = ({userPropertyName, apiMe
 
 
     useEffect(() => {
-        if(apiResponse.success)
+        if(apiResponse?.success)
             setUser( apiResponse.data)
     }, [apiResponse])
 
