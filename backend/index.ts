@@ -3,17 +3,15 @@ dotenv.config();
 import express from 'express';
 import mongoose, {ConnectOptions} from 'mongoose';
 import userRouter from './infrastructure/routers/userRouter';
-import emailRouter from './infrastructure/routers/emailRouter';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import errorMiddleware from './infrastructure/middleware/errorMiddleware';
-import {exposeServices} from "./infrastructure/middleware/exproseServices/exposeServices";
+import {exposeServices} from "./infrastructure/middleware/exposeServices";
 
 
 const PORT = process.env.PORT || 5000
 
 const app = express()
-
 
 app.use(express.json())
 app.use(exposeServices)
@@ -24,7 +22,6 @@ app.use(cors({
 }));
 app.use(userRouter)
 
-app.use(emailRouter)
 app.use(errorMiddleware)
 
 const start = async () => {
@@ -34,8 +31,6 @@ const start = async () => {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             } as ConnectOptions)
-
-        //Just to show in console that server works
         app.listen(PORT, () => console.log(`server started on port ${PORT}`))
     } catch (e) {
         console.log(e)

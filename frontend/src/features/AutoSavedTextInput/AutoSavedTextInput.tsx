@@ -3,16 +3,16 @@ import cl from "./AutoSavedTextInput.module.css";
 import SavedIcon from "../../shared/ui/SavedIcon/SavedIcon"
 import {useDebouncedSaveToApi} from "../../shared/hooks/useDebouncedSaveToApi";
 
-interface AutoSavedUserInputProps {
+interface AutoSavedUserInputProps  extends React.InputHTMLAttributes<HTMLInputElement>{
     inputName: string,
     defaultValue:any,
     apiMethod: Function,
     successCallback: ({}:any) => void
 }
 
-const AutoSavedTextInput:FC<AutoSavedUserInputProps> = ({inputName, apiMethod, successCallback, defaultValue}) => {
-    const [propertyValue, setPropertyValue] = useState(defaultValue);
-    const [showSavedIcon, apiResponse] = useDebouncedSaveToApi(apiMethod, propertyValue, 500, 500)
+const AutoSavedTextInput:FC<AutoSavedUserInputProps> = ({inputName, apiMethod, successCallback, defaultValue, ...props}) => {
+    const [value, setValue] = useState(defaultValue);
+    const [showSavedIcon, apiResponse] = useDebouncedSaveToApi(apiMethod, value, 500, 500)
 
     useEffect(() => {
         if(apiResponse?.success)
@@ -21,9 +21,14 @@ const AutoSavedTextInput:FC<AutoSavedUserInputProps> = ({inputName, apiMethod, s
 
     return (
         <div className={cl.wrap}>
-            <input placeholder={propertyValue.toString()} name={inputName}
-                   type="text" className={cl.property}
-                   value={propertyValue.toString()} onChange={(e) => setPropertyValue(e.target.value)}/>
+            <input placeholder={value.toString()}
+                   name={inputName}
+                   type="text"
+                   className={cl.property}
+                   value={value.toString()}
+                   onChange={(e) => setValue(e.target.value)}
+                   {...props}
+            />
             <SavedIcon showSavedIcon={showSavedIcon}>Saved</SavedIcon>
         </div>
     );

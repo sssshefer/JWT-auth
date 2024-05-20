@@ -1,4 +1,4 @@
-import {Token} from "../../../core/domain/Token/Token";
+import {Token} from "../../../core/domain/Token";
 import ITokenModel from "../Entities/Token/ITokenModel";
 
 interface DbMapper<D, E> {

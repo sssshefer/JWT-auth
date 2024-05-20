@@ -5,11 +5,9 @@ import {IResponse} from "../../shared/types/IResponse";
 import {IUser} from "../../shared/types/IUser";
 import {UserContext} from "../../shared/store/UserContext";
 
-interface LogOutProps {
-    children: any,
-}
+interface LogOutProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-const LogOutButton: FC<LogOutProps> = ({children}) => {
+const LogOutButton: FC<LogOutProps> = ({children, ...props}) => {
     const {user, setUser} = useContext(UserContext)
 
     const navigate = useNavigate()
@@ -23,7 +21,7 @@ const LogOutButton: FC<LogOutProps> = ({children}) => {
     }
 
     return (
-        <button onClick={logoutHandle}>
+        <button onClick={logoutHandle} {...props}>
             {children}
         </button>
     );

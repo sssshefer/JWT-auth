@@ -1,7 +1,7 @@
 import ApiError from '../exceptions/ApiError';
 import MyError from '../exceptions/MyError';
 import {Request,Response, NextFunction} from 'express';
-import {IRequestWithServices} from "./exproseServices/exposeServices";
+import {IRequestWithServices} from "./exposeServices";
 
 export default async function (req:Request, res:Response, next:NextFunction) {
     const modifiedReq = req as IRequestWithServices;

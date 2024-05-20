@@ -8,7 +8,6 @@ const $host:AxiosInstance = axios.create({
     headers:{
         Accept: 'application/json'
     }
-
 })
 
 const $authHost:AxiosInstance = axios.create({

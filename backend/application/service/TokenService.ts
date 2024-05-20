@@ -1,9 +1,9 @@
-import TokenDomainService from "../../../core/domainService/TokenDomainService";
+import TokenDomainService from "../../core/domainService/TokenDomainService";
+//todo remove dependency from mongoose Schema here
 import {Schema} from "mongoose";
 
 export default class TokenService {
-    constructor(readonly tokenDomainService: TokenDomainService) {
-    }
+    constructor(readonly tokenDomainService: TokenDomainService) {}
 
     generateTokens(payload: {}) {
         return  this.tokenDomainService.generateTokens(payload);

@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {UserApi} from "../../shared/api/userApi";
 import {IResponse} from "../../shared/types/IResponse";
-import {unexpectedErrorResponse} from "../../shared/consts/errors";
-import {AxiosError} from "axios";
 
 interface LoginButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     setResponse: React.Dispatch<IResponse|undefined>,

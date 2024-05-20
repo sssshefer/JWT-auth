@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
-import {IMyEmailService} from "../../application/IMyEmailService";
-//todo rewrite to proper new service
-export class MyEmailService implements IMyEmailService {
+import MailDomainService from "../../../core/domainService/MailDomainService";
+
+export class MailDomainServiceImpl implements MailDomainService {
     private transporter: nodemailer.Transporter;
 
     constructor() {
@@ -88,16 +88,5 @@ export class MyEmailService implements IMyEmailService {
                 `
         })
     }
-
-    async sendEmailToWripet(senderEmail: string, firstName: string, lastName: string, message: string) {
-        //todo design changing password mail
-        await this.transporter.sendMail({
-            to: process.env.SMTP_USER,
-            from: process.env.SMTP_USER,
-            subject: `Wripet contact form. ${senderEmail} is trying to reach you`,
-            text: `${senderEmail} \n From ${firstName} ${lastName} \n\n ${message}`,
-        })
-    }
-
 }
 

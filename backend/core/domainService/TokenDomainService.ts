@@ -1,6 +1,6 @@
-import {Token} from "../domain/Token/Token";
+import {Token} from "../domain/Token";
 import {Schema} from "mongoose";
-import {User} from "../domain/User/User";
+import {User} from "../domain/User";
 
 interface ITokens {
     accessToken: string;

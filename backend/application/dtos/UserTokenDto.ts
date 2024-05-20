@@ -1,4 +1,4 @@
-import {User} from "../../core/domain/User/User";
+import {User} from "../../core/domain/User";
 
 export default class UserTokenDto {
     constructor(

@@ -1,4 +1,4 @@
-import {User} from "../../../core/domain/User/User";
+import {User} from "../../../core/domain/User";
 import IUserModel from "../Entities/User/IUserModel";
 
 interface DbMapper<D, E> {

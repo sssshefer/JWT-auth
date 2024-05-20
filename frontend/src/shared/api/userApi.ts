@@ -1,5 +1,4 @@
 import {$authHost, $host} from "./index";
-import React from 'react';
 import {IResponse} from "../types/IResponse";
 
 
@@ -16,13 +15,6 @@ export const UserApi = {
         const data = response.data
         localStorage.setItem('accessToken', data.data.accessToken);
         return data
-    },
-
-    async useUpdateTokens() {
-        const updateTokens = async () => {
-            const {data} = await $authHost.post('updateTokens') as IResponse
-            localStorage.setItem('accessToken', data.tokens.accessToken)
-        }
     },
 
     async getUser() {
@@ -60,7 +52,5 @@ export const UserApi = {
         const {data} = await $host.post(`sendNewPassword`, {email}) as IResponse
         return data;
     },
-
-
 }
 

@@ -1,5 +1,8 @@
 .wrap {
     min-height: calc(100vh - 140px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .form {
@@ -17,20 +20,6 @@
 .inputsWrap {
     margin-bottom: 10px;
 }
-
-.inputsWrap input {
-    border: 1px solid var(--dark-primary-color);
-    margin: 10px 0;
-    width: 100%;
-    height: 41px;
-    padding: 4px 0 0 15px;
-    font-size: var(--text6);
-    font-weight: var(--regular);
-    font-family: Verdana, sans-serif, Arial;
-    letter-spacing: 0.125em;
-    border-radius: 5px;
-}
-
 
 .inputsWrap input:focus {
     border: 1px solid var(--accent-color)
@@ -84,16 +73,4 @@
 .signupLink {
     display: inline-block;
     font-weight: var(--semiBold);
-}
-
-@media screen and (max-width: 576px) {
-    .title {
-        font-size: var(--text4);
-    }
-
-    .form {
-        border: 1px solid var(--dark-primary-color);
-        width: 310px;
-        padding: 37px 35px 7px;
-    }
 }

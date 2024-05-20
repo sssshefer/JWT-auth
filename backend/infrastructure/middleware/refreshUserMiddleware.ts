@@ -1,6 +1,6 @@
 import ApiError from "../exceptions/ApiError";
 import {NextFunction, Response, Request} from 'express';
-import {IRequestWithServices} from "./exproseServices/exposeServices";
+import {IRequestWithServices} from "./exposeServices";
 
 export default async function (req:Request, res:Response, next:NextFunction) {
     const modifiedReq = req as IRequestWithServices;
@@ -13,7 +13,6 @@ export default async function (req:Request, res:Response, next:NextFunction) {
         let userFromToken = modifiedReq.body.user;
         let user = await modifiedReq.userService.getOneByEmail(userFromToken.email)
 
-        await modifiedReq.userService.validateSubscriptionStatus(user.email)
         await modifiedReq.userService.validateStrike(user.email)
         await modifiedReq.userService.updateUserLogs(user.email)
 

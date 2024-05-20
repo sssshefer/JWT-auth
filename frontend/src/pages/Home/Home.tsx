@@ -29,11 +29,9 @@ const Home = () => {
             <p> After log in to your account you can change the password on "Account" page in the bottom. You will be
                 log out from all devices afterwards</p>
             <h3>Auto saved inputs</h3>
-            <p> On "Account" page you can change your first and last name. Debounced input will save your text after short delay</p>
-
-
+            <p> On "Account" page you can change your first and last name. Debounced input will save your text after
+                short delay</p>
         </div>
-
     );
 };
 

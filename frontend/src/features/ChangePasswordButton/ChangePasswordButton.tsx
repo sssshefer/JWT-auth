@@ -1,17 +1,14 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {ButtonHTMLAttributes, FC, useContext} from 'react';
 import {UserApi} from "../../shared/api/userApi";
 import {useNavigate} from "react-router-dom";
-import cl from './ChangePassword.module.css';
 import {IResponse} from "../../shared/types/IResponse";
 import {UserContext} from "../../shared/store/UserContext";
 
-interface ChangePasswordButtonProps {
+interface ChangePasswordButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     setShowSaved: React.Dispatch<React.SetStateAction<boolean>>,
     oldPassword: string,
     newPassword: string,
     setResponse: React.Dispatch<IResponse | undefined>,
-    className?: string,
-    children: any
 }
 
 const ChangePasswordButton: FC<ChangePasswordButtonProps> = ({
@@ -19,13 +16,11 @@ const ChangePasswordButton: FC<ChangePasswordButtonProps> = ({
                                                                  oldPassword,
                                                                  newPassword,
                                                                  setResponse,
-                                                                 className,
-                                                                 children
+                                                                 children,
+                                                                 ...props
                                                              }) => {
     const navigate = useNavigate();
-
     const {user, setUser} = useContext(UserContext)
-
 
     const handleChangePassword = async () => {
         try {
@@ -33,19 +28,17 @@ const ChangePasswordButton: FC<ChangePasswordButtonProps> = ({
             setResponse(response)
             setShowSaved(true)
             setTimeout(() => {
-                setShowSaved(false)
                 setUser(undefined)
                 navigate("/login")
-
+                setShowSaved(false)
             }, 1500)
-
         } catch (err: any) {
             setResponse(err.response.data)
         }
     }
 
     return (
-        <button onClick={handleChangePassword} className={className}>
+        <button onClick={handleChangePassword} {...props}>
             {children}
         </button>
     );

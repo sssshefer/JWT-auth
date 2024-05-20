@@ -1,8 +1,9 @@
 import {MongoOrm as orm} from "../orm/MongoOrm";
 import TokenDomainService from "../../../core/domainService/TokenDomainService";
 import jwt from "jsonwebtoken";
-import mongoose, {Schema, Types} from "mongoose";
-import {User} from "../../../core/domain/User/User";
+//todo remove dependency from mongoose Schema here
+import {Schema} from "mongoose";
+import {User} from "../../../core/domain/User";
 
 
 export class TokenDomainServiceImpl implements TokenDomainService {

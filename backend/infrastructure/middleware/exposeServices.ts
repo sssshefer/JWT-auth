@@ -1,22 +1,22 @@
 import {NextFunction, Request, Response} from "express";
-import UserService from "../../../application/service/UserService/UserService";
-import TokenService from "../../../application/service/TokenService/TokenService";
-import {IMyEmailService} from "../../../application/IMyEmailService";
+import UserService from "../../application/service/UserService";
+import TokenService from "../../application/service/TokenService";
+import MailService from "../../application/service/MailService";
 import {
-    emailService,
+    mailService,
     tokenService,
     userService
-} from "../../../.config";
+} from "../../.config";
 
 export interface IRequestWithServices extends Request {
     userService: UserService,
     tokenService: TokenService,
-    emailService: IMyEmailService,
+    mailService: MailService,
 }
 
 export const exposeServices = (req:Request, res: Response, next: NextFunction) => {
     (req as IRequestWithServices).userService = userService;
     (req as IRequestWithServices).tokenService = tokenService;
-    (req as IRequestWithServices).emailService = emailService;
+    (req as IRequestWithServices).mailService = mailService;
     next()
 }

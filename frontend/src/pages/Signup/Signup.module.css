@@ -25,23 +25,9 @@
     margin-bottom: 20px;
 }
 
-.inputsWrap input {
-    border: 1px solid var(--dark-primary-color);
-    margin: 10px 0;
-    width: 100%;
-    height: 41px;
-    padding: 4px 0 0 15px;
-    font-size: var(--text6);
-    font-weight: var(--regular);
-    font-family: Verdana, sans-serif, Arial;
-    letter-spacing: 0.125em;
-    border-radius: 5px;
-}
-
 .inputsWrap input:focus {
     border: 1px solid var(--accent-color)
 }
-
 
 .inputsWrap input::placeholder {
     font-size: var(--text6);

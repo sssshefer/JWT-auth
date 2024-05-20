@@ -1,11 +1,8 @@
-import {User} from "../domain/User/User";
+import {User} from "../domain/User";
 
 export default interface UserDomainService {
-    getAll(): Promise<User[]>;
 
     checkUserExists(email: string): Promise<boolean>;
-
-    getOne(key: string, value: any): Promise<User>;
 
     getOneByEmail(email: string): Promise<User>;
 
@@ -19,15 +16,9 @@ export default interface UserDomainService {
 
     setNewPassword(email: string, newPassword: string): Promise<void>;
 
-    checkSubscription(endOfSubscription: Date): Promise<boolean>;
-
-    removeSubscription(email: string): Promise<void>;
-
     validateStrike(email: string): Promise<void>;
 
     resetStrike(email: string): Promise<void>;
-
-    validateSubscriptionStatus(email: string): Promise<void>;
 
     update(email: string, newData: {}): Promise<void>;
 }

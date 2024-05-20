@@ -1,24 +1,24 @@
 import {validationResult} from 'express-validator';
 import MyError from '../exceptions/MyError';
-import {MyEmailService} from '../oldService/MyEmailService';
 import passwordGenerator from 'generate-password';
 import ApiError from '../exceptions/ApiError';
-import UserService from "../../application/service/UserService/UserService";
+import UserService from "../../application/service/UserService";
 import {NextFunction, Request, Response} from "express";
-import TokenService from "../../application/service/TokenService/TokenService";
+import TokenService from "../../application/service/TokenService";
 import UserTokenDto from "../../application/dtos/UserTokenDto";
 import {successResponseMapper} from "./Response/ResponseMappers";
+import MailService from "../../application/service/MailService";
 
 
 export class UserController {
     userService: UserService;
     tokenService: TokenService;
-    emailService: MyEmailService;
+    mailService: MailService;
 
-    constructor(userService: UserService, tokenService: TokenService, emailService: MyEmailService) {
+    constructor(userService: UserService, tokenService: TokenService, mailService: MailService) {
         this.userService = userService;
         this.tokenService = tokenService;
-        this.emailService = emailService;
+        this.mailService = mailService;
     }
 
     async signup(req: Request, res: Response, next: NextFunction) {
@@ -27,7 +27,6 @@ export class UserController {
             if (!errors.isEmpty()) return next(MyError.inputErrors( errors.array()))
 
             let {email, password, timezoneOffset, checkEmail} = req.body;
-            console.log(10, checkEmail)
             email = email.toLowerCase().trim()
 
             const userExists = await this.userService.checkUserExists(email)
@@ -38,7 +37,7 @@ export class UserController {
             const user = await this.userService.signup(email, password, timezoneOffset, checkEmail)
             const userForTransfer = UserTokenDto.fromUser(user)
             if (checkEmail)
-                await this.emailService.sendActivationMail(email, `${process.env.API_URL}/activate/${user.activationLink}`);
+                await this.mailService.sendActivationMail(email, `${process.env.API_URL}/activate/${user.activationLink}`);
             const tokens = await this.tokenService.generateTokens(userForTransfer)
             await this.tokenService.saveRefreshToken(user._id, tokens.refreshToken)
             res.cookie('refreshToken', tokens.refreshToken, {
@@ -108,7 +107,7 @@ export class UserController {
             const userExists = await this.userService.checkUserExists(email)
             if (!userExists) return next(MyError.inputError('User with such email was not found',  'email'))
             const user = await this.userService.getOneByEmail(email)
-            await this.emailService.sendActivationMail(user.email, `${process.env.API_URL}/activate/${user.activationLink}`);
+            await this.mailService.sendActivationMail(user.email, `${process.env.API_URL}/activate/${user.activationLink}`);
             return res.json({})
         } catch (e) {
             next(e)
@@ -232,7 +231,7 @@ export class UserController {
             await this.userService.setNewPassword(email, newPassword)
             const user = await this.userService.getOneByEmail(email)
             await this.tokenService.removeAllUserTokens(user._id)
-            await this.emailService.sendPasswordIsChangedMail(email)
+            await this.mailService.sendPasswordIsChangedMail(email)
             res.clearCookie('refreshToken');
             return res.json(successResponseMapper())
         } catch (e) {
@@ -247,7 +246,7 @@ export class UserController {
                 length: 10,
                 numbers: true
             });
-            await this.emailService.sendNewPasswordMail(email, newPassword)
+            await this.mailService.sendNewPasswordMail(email, newPassword)
             await this.userService.setNewPassword(email, newPassword)
             const user = await this.userService.getOneByEmail(email)
             await this.tokenService.removeAllUserTokens(user._id)

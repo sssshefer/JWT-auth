@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import cl from './Account.module.css'
 import UserIcon from "../../shared/ui/icons/UserIcon";
 import {accentColor} from "../../shared/styles/styles";

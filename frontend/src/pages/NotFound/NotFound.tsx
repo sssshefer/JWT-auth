@@ -14,7 +14,6 @@ const NotFound = () => {
                 Make sure you entered correct url
             </p>
         </div>
-
     );
 };
 

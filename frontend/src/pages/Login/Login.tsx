@@ -1,57 +1,51 @@
 import React, {useContext, useEffect, useState} from 'react';
 import cl from './Login.module.css'
 import {Link, useNavigate} from "react-router-dom";
-import FilteredFormErrors from "../../entities/FilteredFormErrors/FilteredFormErrors";
+import FilteredFormError from "../../entities/FilteredFormErrors/FilteredFormError";
 import RecoverPasswordButton from "../../features/RecoverPasswordButton/RecoverPasswordButton";
 import PasswordInput from "../../entities/PasswordInput/PasswordInput";
 import EmailConfirmPopup from "../../widgets/EmailConfirmPopup/EmailConfirmPopup";
 import LoginButton from "../../features/LoginButton/LoginButton";
 import RecoverPopup from "../../widgets/PasswordRecoverPopup/PasswordRecoverPopup";
 import {IResponse} from "../../shared/types/IResponse";
-import CustomButton from "../../shared/ui/CustomButton/CustomButton";
 import {UserContext} from "../../shared/store/UserContext";
 
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const {user, setUser} = useContext(UserContext)
 
-    const navigate = useNavigate();
-
-    const [openRecoverPasswordButton, setOpenRecoverPasswordButton] = useState<boolean>(false)
-    const [confirmPopupIsVisible, setConfirmPopupIsVisible] = useState<boolean>(false)
+    const [recoverButtonIsVisible, setRecoverButtonIsVisible] = useState<boolean>(false)
     const [recoverPopupIsVisible, setRecoverPopupIsVisible] = useState<boolean>(false)
+    const [confirmPopupIsVisible, setConfirmPopupIsVisible] = useState<boolean>(false)
 
     const [recoverPasswordResponse, setRecoverPasswordResponse] = useState<IResponse | undefined>(undefined)
     const [loginResponse, setLoginResponse] = useState<IResponse | undefined>(undefined)
 
     useEffect(() => {
-        console.log(loginResponse)
         setConfirmPopupIsVisible(loginResponse?.errors?.some(error => error.path === 'emailActivation') || false)
         if (loginResponse?.success) {
             setUser(loginResponse.data.userDetails)
             navigate('/account')
         }
-    }, [loginResponse?.success])
+    }, [loginResponse])
+
     return (
-
-        <div className={cl.wrap + " flexCenter"}>
-            {confirmPopupIsVisible &&
-                <EmailConfirmPopup email={email} password={password} setPopupIsVisible={setConfirmPopupIsVisible}/>}
-            {recoverPopupIsVisible &&
-                <RecoverPopup setPopupIsVisible={setRecoverPopupIsVisible}
-                              recoverPasswordResponse={recoverPasswordResponse}/>}
-
-            <form className={cl.form} autoComplete='on'>
+        <div className={cl.wrap}>
+            <form className={cl.form}>
                 <h1 className={cl.title}>
                     Log in
                 </h1>
                 <div className={cl.inputsWrap}>
-                    <input name="email" id="email" type="email" placeholder='Email or username'
-                           onChange={e => setEmail((e.target.value))}/>
-                    <FilteredFormErrors errors={loginResponse?.errors} type="email"/>
-                    <PasswordInput setPassword={setPassword} errors={loginResponse?.errors}/>
+                    <input name="email" type="email" placeholder='Email or username'
+                           onChange={e => setEmail((e.target.value))} className="customInput"/>
+                    <FilteredFormError errors={loginResponse?.errors} type="email"/>
+
+                    <PasswordInput setPassword={setPassword} className="customInput"/>
+                    <FilteredFormError errors={loginResponse?.errors} type='password'/>
                 </div>
                 <p className="error">
                     {/*loginResponse?.message}*/}
@@ -65,24 +59,29 @@ const Login = () => {
                 <div className={cl.sendNewPasswordWrap}>
                     <button className={cl.sendNewPasswordOpenText}
                             onClick={(e) => {
-                                e.preventDefault()
-                                setOpenRecoverPasswordButton(!openRecoverPasswordButton)
-                            }}>I
-                        forgot my password
+                                e.preventDefault();
+                                setRecoverButtonIsVisible(!recoverButtonIsVisible)
+                            }}>
+                        I forgot my password
                     </button>
-                    {openRecoverPasswordButton&&<div className={cl.sendNewPasswordButtonWrap}>
-                        <RecoverPasswordButton email={email} setRecoverPasswordResponse={setRecoverPasswordResponse}
-                                               setRecoverPopupIsVisible={setRecoverPopupIsVisible}
-                                               className={"customButton"}>
-                           Send new to email
-                        </RecoverPasswordButton>
-                    </div>}
+                    {recoverButtonIsVisible &&
+                        <div className={cl.sendNewPasswordButtonWrap}>
+                            <RecoverPasswordButton email={email} setRecoverPasswordResponse={setRecoverPasswordResponse}
+                                                   setRecoverPopupIsVisible={setRecoverPopupIsVisible}
+                                                   className={"customButton"}>
+                                Send new to email
+                            </RecoverPasswordButton>
+                        </div>}
                 </div>
-
                 <p className={cl.signupLinkWrap}>
                     Not a member yet? <Link to={'/signup'} className={cl.signupLink}>Sign up for free</Link>
                 </p>
             </form>
+            {confirmPopupIsVisible &&
+                <EmailConfirmPopup email={email} password={password} setPopupIsVisible={setConfirmPopupIsVisible}/>}
+            {recoverPopupIsVisible &&
+                <RecoverPopup setPopupIsVisible={setRecoverPopupIsVisible}
+                              recoverPasswordResponse={recoverPasswordResponse}/>}
         </div>
     );
 };

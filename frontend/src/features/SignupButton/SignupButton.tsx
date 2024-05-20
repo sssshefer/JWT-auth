@@ -1,7 +1,5 @@
 import React, {FC, useEffect} from 'react';
-import cl from './SignupButton.module.css'
 import {UserApi} from "../../shared/api/userApi";
-import {unexpectedErrorResponse} from "../../shared/consts/errors";
 
 interface SignupButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     setResponse: React.Dispatch<any>,
@@ -28,7 +26,6 @@ const SignupButton: FC<SignupButtonProps> = ({setResponse, email, password, skip
     }, [skipEmailVerification])
     return (
         <button onClick={(e) => handleSignupSubmit(e)} type="submit" {...props}>{children}</button>
-
     );
 };
 
