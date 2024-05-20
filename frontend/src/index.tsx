@@ -6,8 +6,9 @@ import UserProvider from "./shared/store/UserContext";
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
 root.render(
-        <UserProvider>
-            <App/>
-        </UserProvider>
+    <UserProvider>
+        <App/>
+    </UserProvider>
 );

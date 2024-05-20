@@ -7,7 +7,7 @@ import Timer from "../../entities/Timer/Timer";
 import EmailIcon from "../../shared/ui/icons/EmailIcon";
 import LoginButton from "../../features/LoginButton/LoginButton";
 import {IResponse} from "../../shared/types/IResponse";
-import {accentColor} from "../../shared/ui/styles/styles";
+import {accentColor} from "../../shared/styles/styles";
 import {UserContext} from "../../shared/store/UserContext";
 
 interface EmailConfirmPopupProps {

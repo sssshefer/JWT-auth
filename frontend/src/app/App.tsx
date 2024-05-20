@@ -5,7 +5,8 @@ import {UserApi} from "../shared/api/userApi";
 import Header from "../widgets/Header/Header";
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./router/AppRouter";
-import UserProvider, {UserContext} from "../shared/store/UserContext";
+import {UserContext} from "../shared/store/UserContext";
+
 
 
 function App() {
@@ -34,10 +35,6 @@ function App() {
         <BrowserRouter>
             <Header isAuth={!!user} menu={[{id:'home', title:'Home', link:'/'}]}/>
             <AppRouter isAuth={!!user}/>
-            {/*<div className="App">*/}
-            {/*    Account page*/}
-            {/*    {!user && <div>No user found</div>}*/}
-            {/*</div>*/}
         </BrowserRouter>
     );
 }

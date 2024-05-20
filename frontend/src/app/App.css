@@ -1,27 +1,14 @@
 :root {
     --dark-primary-color: #2a2a2a;
     --light-primary-color: #fff;
-    --bs-light-rgb: #fff;
-    --accent-color: #718AF4;
+    --accent-color: #7178f4;
     --grey: #BCBCBC;
-    --green-code: #A2C054;
-    --yellow-code: #E7BE5B;
-    --purple-code: #947596;
-    --blue-code: #5896B8;
-    --codeBackground: rgb(30, 30, 30);
     --text1: 60px;
     --text2: 42px;
     --text3: 30px;
     --text4: 24px;
     --text5: 20px;
     --text6: 14px;
-    /*
-     --text1: 73px;
-    --text2: 48px;
-    --text3: 35px;
-    --text4: 29px;
-    --text5: 19.6px;
-    --text6: 14px;*/
     --light: 300;
     --regular: 400;
     --semiBold: 600;
@@ -139,16 +126,6 @@ button:active {
     outline: none;
 }
 
-.buttonLilac {
-    background-color: var(--accent-color);
-    font-size: var(--text5);
-    color: var(--light-primary-color);
-    box-shadow: 0 4px 4px 0 #00000040;
-    border-radius: var(--siteBorderRadius);
-    padding: 8px 17px;
-    font-weight: var(--semiBold);
-}
-
 .accentColor {
     color: var(--accent-color)
 }
@@ -184,7 +161,6 @@ button:active {
 }
 
 .customButton {
-
     display: flex;
     justify-content: center;
     align-items: center;

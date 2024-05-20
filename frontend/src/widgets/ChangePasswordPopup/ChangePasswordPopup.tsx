@@ -3,8 +3,8 @@ import cl from './ChangePasswordPopup.module.css'
 import KeyIcon from "../../shared/ui/icons/KeyIcon";
 import ChangePasswordButton from "../../features/ChangePasswordButton/ChangePasswordButton";
 import PasswordInput from "../../entities/PasswordInput/PasswordInput";
-import SavedIcon from "../../shared/ui/icons/SavedIcon/SavedIcon";
-import {accentColor} from "../../shared/ui/styles/styles";
+import SavedIcon from "../../shared/ui/SavedIcon/SavedIcon";
+import {accentColor} from "../../shared/styles/styles";
 import {IResponse} from "../../shared/types/IResponse";
 
 interface ChangePasswordPopupProps {

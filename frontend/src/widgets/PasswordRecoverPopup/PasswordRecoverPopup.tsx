@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import cl from "./PasswordRecoverPopup.module.css";
 import EmailIcon from "../../shared/ui/icons/EmailIcon";
-import {accentColor} from "../../shared/ui/styles/styles";
+import {accentColor} from "../../shared/styles/styles";
 import {IResponse} from "../../shared/types/IResponse";
 
 interface RecoverPopupProps {

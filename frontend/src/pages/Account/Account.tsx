@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import cl from './Account.module.css'
 import UserIcon from "../../shared/ui/icons/UserIcon";
-import {accentColor} from "../../shared/ui/styles/styles";
+import {accentColor} from "../../shared/styles/styles";
 import {UserContext} from "../../shared/store/UserContext";
-import AutoSavedUserInput from "../../entities/AutoSavedUserInput/AutoSavedUserInput";
+import AutoSavedTextInput from "../../features/AutoSavedTextInput/AutoSavedTextInput";
 import {UserApi} from "../../shared/api/userApi";
 import CustomButton from "../../shared/ui/CustomButton/CustomButton";
 import ChangePasswordPopup from "../../widgets/ChangePasswordPopup/ChangePasswordPopup";
+import {IUser} from "../../shared/types/IUser";
 
 
 const Account = () => {
@@ -15,7 +16,6 @@ const Account = () => {
 
     return (
         <div className={cl.wrap}>
-            {/*{<UserDetails user={user}/>}*/}
             <table className={cl.userProps}>
                 <caption>
                     <div className={cl.userIconWrap}>
@@ -32,15 +32,21 @@ const Account = () => {
                 </tr>
                 <tr>
                     <th>Email confirmation:</th>
-                    <td>{user?.isActivated?'Confirmed':'Not confirmed'}</td>
+                    <td>{user?.isActivated ? 'Confirmed' : 'Not confirmed'}</td>
                 </tr>
                 <tr>
                     <th>First name:</th>
-                    <td><AutoSavedUserInput userPropertyName={'firstName'} apiMethod={UserApi.updateFirstName} /></td>
+                    <td><AutoSavedTextInput inputName={'firstName'}
+                                            apiMethod={UserApi.updateFirstName}
+                                            successCallback={(user: IUser | undefined) => setUser(user)}
+                                            defaultValue={user?.firstName}/></td>
                 </tr>
                 <tr>
                     <th>Last name:</th>
-                    <td><AutoSavedUserInput userPropertyName={'lastName'} apiMethod={UserApi.updateLastName} /></td>
+                    <td><AutoSavedTextInput inputName={'lastName'}
+                                            apiMethod={UserApi.updateLastName}
+                                            successCallback={(user: IUser | undefined) => setUser(user)}
+                                            defaultValue={user?.lastName}/></td>
                 </tr>
                 <tr>
                     <th>Subscription status:</th>
@@ -48,7 +54,7 @@ const Account = () => {
                 </tr>
                 <tr>
                     <th>Registration date:</th>
-                    <td>{ user?.registrationDate && new Date(user.registrationDate).toLocaleString()}</td>
+                    <td>{user?.registrationDate && new Date(user.registrationDate).toLocaleString()}</td>
                 </tr>
                 <tr>
                     <th>Last visit date:</th>

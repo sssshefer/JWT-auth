@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useRef} from 'react';
 import {CSSTransition} from "react-transition-group";
 import cl from './SavedIcon.module.css'
 
@@ -9,7 +9,8 @@ interface SavedIconProps {
 
 const SavedIcon: FC<SavedIconProps> = ({showSavedIcon, children}) => {
     const savedIconNode = useRef(null)
-    return (<span className={cl.wrap}>
+    return (
+        <span className={cl.wrap}>
             <CSSTransition
                 nodeRef={savedIconNode}
                 in={showSavedIcon}
@@ -24,7 +25,6 @@ const SavedIcon: FC<SavedIconProps> = ({showSavedIcon, children}) => {
                             </span>
             </CSSTransition>
         </span>
-
     );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import cl from './Home.module.css'
-import {accentColor} from "../../shared/ui/styles/styles";
+import {accentColor} from "../../shared/styles/styles";
 
 const Home = () => {
     return (

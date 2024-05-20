@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import {IMyEmailService} from "../../application/IMyEmailService";
-
+//todo rewrite to proper new service
 export class MyEmailService implements IMyEmailService {
     private transporter: nodemailer.Transporter;
 

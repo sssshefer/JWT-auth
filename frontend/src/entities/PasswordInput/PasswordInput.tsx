@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import cl from './PasswordInput.module.css'
 import FilteredFormErrors from "../FilteredFormErrors/FilteredFormErrors";
 import PasswordEyeIcon from "../../shared/ui/icons/PasswordEyeIcon";
-import {accentColor, darkPrimaryColor} from "../../shared/ui/styles/styles";
+import {accentColor, darkPrimaryColor} from "../../shared/styles/styles";
 import {IFormError} from "../../shared/types/IFormError";
 
 interface PasswordInputProps {
