@@ -18,12 +18,12 @@ interface EmailConfirmPopupProps {
 }
 
 const EmailConfirmPopup: FC<EmailConfirmPopupProps> = ({email, password, setPopupIsVisible}) => {
-
     const navigate = useNavigate();
     const [showFailedLoginIcon, setShowFailedLoginIcon] = useState<boolean>(false)
     const [response, setResponse] = useState<IResponse | undefined>(undefined)
     const {user, setUser} = useContext(UserContext)
 
+    //todo maybe change to plain useEffect
     useLayoutEffect(() => {
         if (response?.success) {
             setStartTimer(false)
@@ -36,6 +36,8 @@ const EmailConfirmPopup: FC<EmailConfirmPopupProps> = ({email, password, setPopu
                 timeout = setTimeout(() => setShowFailedLoginIcon(false), 800)
             }
     }, [response])
+
+
 
     let timeout;
 

@@ -9,6 +9,7 @@ import LoginButton from "../../features/LoginButton/LoginButton";
 import RecoverPopup from "../../widgets/PasswordRecoverPopup/PasswordRecoverPopup";
 import {IResponse} from "../../shared/types/IResponse";
 import {UserContext} from "../../shared/store/UserContext";
+import {UserApi} from "../../shared/api/userApi";
 
 
 const Login = () => {
@@ -26,13 +27,23 @@ const Login = () => {
     const [loginResponse, setLoginResponse] = useState<IResponse | undefined>(undefined)
 
     useEffect(() => {
-        setConfirmPopupIsVisible(loginResponse?.errors?.some(error => error.path === 'emailActivation') || false)
+        if(loginResponse?.errors?.some(error => error.path === 'emailActivation')){
+            setConfirmPopupIsVisible(true)
+            handleResend()
+        }
         if (loginResponse?.success) {
             setUser(loginResponse.data.userDetails)
             navigate('/account')
         }
     }, [loginResponse])
 
+    const handleResend = async () => {
+        try {
+            await UserApi.resendActivationLink(email, password)
+        } catch (e) {
+            console.log(e)
+        }
+    }
     return (
         <div className={cl.wrap}>
             <form className={cl.form}>
