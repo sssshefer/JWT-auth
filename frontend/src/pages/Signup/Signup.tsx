@@ -39,9 +39,9 @@ const Signup = () => {
                                     labelText={'Turn off email confirmation for testing purpose'}
                                     setCheckbox={setSkipEmailVerification}/>
                 </div>
-                <h6 className={cl.licenseAgreement}>By signing up, you agree to our
+                <h6 className={cl.licenseAgreement}>By signing up, you agree to our&nbsp;
                     <Link to={'/terms-of-use'} target="_blank">Terms of Use</Link>
-                    and
+                    &nbsp;and&nbsp;
                     <Link to={'/privacy-policy'} target="_blank">Privacy Policy</Link>
                 </h6>
                 <div className={cl.registrationButtonWrap}>

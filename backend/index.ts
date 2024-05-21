@@ -25,8 +25,8 @@ app.use(userRouter)
 app.use(errorMiddleware)
 
 const start = async () => {
-    try {//TODO change password and username in db
-        await mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ed2lfon.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+    try {
+        await mongoose.connect(`mongodb://${process.env.DB_IP}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
             {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
