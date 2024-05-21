@@ -2,3 +2,4 @@ node_modules
 .idea
 .env
 ecosystem.config.js
+environment.d.ts

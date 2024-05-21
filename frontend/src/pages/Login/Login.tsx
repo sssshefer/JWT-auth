@@ -44,6 +44,7 @@ const Login = () => {
             console.log(e)
         }
     }
+
     return (
         <div className={cl.wrap}>
             <form className={cl.form}>
@@ -58,9 +59,6 @@ const Login = () => {
                     <PasswordInput setPassword={setPassword} className="customInput"/>
                     <FilteredFormError errors={loginResponse?.errors} type='password'/>
                 </div>
-                <p className="error">
-                    {/*loginResponse?.message}*/}
-                </p>
                 <div className={cl.submitButtonWrap}>
                     <LoginButton email={email} password={password} setResponse={setLoginResponse}
                                  className={"customButton"}>

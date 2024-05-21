@@ -1,8 +1,8 @@
 FROM node:latest
 
-RUN mkdir -p /wripetServer
+RUN mkdir -p /jwtServer
 
-WORKDIR /wripetServer
+WORKDIR /jwtServer
 
 COPY package*.json ./
 
@@ -10,13 +10,15 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5001
+EXPOSE 5000
 
 RUN npm install pm2 -g
 
+RUN npm install -g bun
+
 run pm2 status
 
-CMD ["pm2-runtime", "start", "index.ts" ,"--name", "SecWripetServer", "--watch","--env","prod"]
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]
 
 
 

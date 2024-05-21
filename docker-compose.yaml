@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  frontend:
+    container_name: jwt-client-container
+    build: ./frontend/
+    ports:
+      - "3000:3000"
+
+  backend:
+    container_name: jwt-server-container
+    build: ./backend/
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    container_name: database_container
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+    ports:
+      - "27017:27017"
+volumes:
+  mongo_db: { }
