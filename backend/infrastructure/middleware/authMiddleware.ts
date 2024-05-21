@@ -30,7 +30,7 @@ export default async function (req:Request, res:Response, next:NextFunction) {
         if(!userFromToken.isActivated){
             return next(ApiError.UnauthorizedError());
         }
-        if(userFromToken.roles === 'BANNED'){
+        if(userFromToken.roles.includes('BANNED')){
             next(MyError.inputError('Your email is banned',  'email'))
         }
 

@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
-import MailDomainService from "../../../core/domainService/MailDomainService";
 
-export class MailDomainServiceImpl implements MailDomainService {
+export class MailDomainServiceImpl  {
     private transporter: nodemailer.Transporter;
 
     constructor() {
@@ -20,7 +19,6 @@ export class MailDomainServiceImpl implements MailDomainService {
     }
 
     async sendActivationMail(to: string, link: string) {
-        //todo design confirmation mail
         await this.transporter.sendMail({
             to,
             from: `Wripet <${process.env.SMTP_USER}>`,
@@ -45,7 +43,6 @@ export class MailDomainServiceImpl implements MailDomainService {
     }
 
     async sendNewPasswordMail(to: string, password: string) {
-        //todo design changing password mail
         await this.transporter.sendMail({
             to,
             from: `Wripet <${process.env.SMTP_USER}>`,
@@ -68,7 +65,6 @@ export class MailDomainServiceImpl implements MailDomainService {
     }
 
     async sendPasswordIsChangedMail(to: string) {
-        //todo design changing password mail
         await this.transporter.sendMail({
             to,
             from: `Wripet <${process.env.SMTP_USER}>`,

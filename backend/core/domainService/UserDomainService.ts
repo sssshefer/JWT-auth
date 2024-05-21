@@ -1,4 +1,5 @@
 import {User} from "../domain/User";
+import CreateUserDto from "../dtos/CreateUserDto";
 
 export default interface UserDomainService {
 
@@ -6,19 +7,11 @@ export default interface UserDomainService {
 
     getOneByEmail(email: string): Promise<User>;
 
-    signup(email: string, password: string, timezoneOffset: number, checkEmail:boolean): Promise<User>;
+    getOneByActivationLink(activationLink: string): Promise<User>;
 
-    activate(activationLink: string): Promise<void>;
+    create(dto:CreateUserDto): Promise<User>;
 
-    updateUserLogs(email: string): Promise<void>;
+    incrementValue(email: string, field: string, value: number): Promise<void>;
 
-    checkPassword(email: string, password: string): Promise<boolean>;
-
-    setNewPassword(email: string, newPassword: string): Promise<void>;
-
-    validateStrike(email: string): Promise<void>;
-
-    resetStrike(email: string): Promise<void>;
-
-    update(email: string, newData: {}): Promise<void>;
+    update(email: string, newData: {}): Promise<User>;
 }

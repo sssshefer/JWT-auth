@@ -1,25 +1,40 @@
 import TokenDomainService from "../../core/domainService/TokenDomainService";
-//todo remove dependency from mongoose Schema here
-import {Schema} from "mongoose";
+import jwt from "jsonwebtoken";
+import UserDomainService from "../../core/domainService/UserDomainService";
+import {User} from "../../core/domain/User";
 
 export default class TokenService {
     constructor(readonly tokenDomainService: TokenDomainService) {}
 
     generateTokens(payload: {}) {
-        return  this.tokenDomainService.generateTokens(payload);
+        //todo change to env expiresIn
+        const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, {expiresIn: '15m'})
+        const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET as string, {expiresIn: '15d'})
+        return {accessToken, refreshToken};
     }
 
     async validateAccessToken(token: string) {
-        return await this.tokenDomainService.validateAccessToken(token);
+        try {
+            const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET as string)
+            return !!userData;
+        } catch (e) {
+            return false
+        }
     }
 
     async validateRefreshToken(token: string) {
-        return await this.tokenDomainService.validateRefreshToken(token);
+        try {
+
+            const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET as string);
+            return !!userData;
+        } catch (e) {
+            return false
+        }
     }
 
 
-    async saveRefreshToken(userId: Schema.Types.ObjectId, refreshToken: string) {
-        return await this.tokenDomainService.saveRefreshToken(userId, refreshToken);
+    async saveRefreshToken(email: string, refreshToken: string) {
+        await this.tokenDomainService.saveRefreshToken(email, refreshToken)
     }
 
     async removeToken(refreshToken: string) {
@@ -30,15 +45,15 @@ export default class TokenService {
         return await this.tokenDomainService.findToken(refreshToken);
     }
 
-    async removeAllUserTokens(userId: Schema.Types.ObjectId){
-        return await this.tokenDomainService.removeAllUserTokens(userId);
+    async removeAllUserTokens(email: string){
+        return await this.tokenDomainService.removeAllUserTokens(email);
     }
 
     async getUserFromAccessToken(token: string) {
-        return await this.tokenDomainService.getUserFromAccessToken(token);
+        return jwt.verify(token, process.env.JWT_ACCESS_SECRET as string) as User;
     }
 
     async getUserFromRefreshToken(token: string) {
-        return await this.tokenDomainService.getUserFromRefreshToken(token);
+        return jwt.verify(token, process.env.JWT_REFRESH_SECRET as string) as User;
     }
 }

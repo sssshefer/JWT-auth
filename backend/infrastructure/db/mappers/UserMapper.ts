@@ -8,7 +8,6 @@ interface DbMapper<D, E> {
 export class UserMapper implements DbMapper<User, IUserModel> {
     toDomain(entity: IUserModel): User{
         return {
-            _id: entity._id,
             email: entity.email,
             password: entity.password,
             roles: entity.roles,
@@ -17,7 +16,6 @@ export class UserMapper implements DbMapper<User, IUserModel> {
             firstName: entity.firstName,
             lastName: entity.lastName,
             subscriptionStatus: entity.subscriptionStatus,
-            endOfSubscription: entity.endOfSubscription,
             registrationDate: entity.registrationDate,
             lastVisitDate: entity.lastVisitDate,
             totalVisits: entity.totalVisits,

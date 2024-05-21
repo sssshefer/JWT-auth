@@ -1,4 +1,4 @@
-import {User} from "../../core/domain/User";
+import {User} from "../../../core/domain/User";
 
 export default class UserTokenDto {
     constructor(
@@ -6,10 +6,9 @@ export default class UserTokenDto {
         readonly firstName: string,
         readonly lastName: string,
         readonly subscriptionStatus: string,
-        readonly endOfSubscription: Date,
         readonly registrationDate: Date,
         readonly isActivated: boolean,
-        readonly roles: string,
+        readonly roles: string[],
         readonly timezoneOffset: number,
         readonly lastVisitDate: Date,
         readonly totalVisits: number,
@@ -23,7 +22,6 @@ export default class UserTokenDto {
             firstName: user.firstName,
             lastName: user.lastName,
             subscriptionStatus: user.subscriptionStatus,
-            endOfSubscription: user.endOfSubscription,
             registrationDate: user.registrationDate,
             isActivated: user.isActivated,
             roles: user.roles,

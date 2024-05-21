@@ -5,7 +5,7 @@ import ApiError from '../exceptions/ApiError';
 import UserService from "../../application/service/UserService";
 import {NextFunction, Request, Response} from "express";
 import TokenService from "../../application/service/TokenService";
-import UserTokenDto from "../../application/dtos/UserTokenDto";
+import UserTokenDto from "./DTOs/UserTokenDto";
 import {successResponseMapper} from "./Response/ResponseMappers";
 import MailService from "../../application/service/MailService";
 
@@ -24,22 +24,17 @@ export class UserController {
     async signup(req: Request, res: Response, next: NextFunction) {
         try {
             const errors = validationResult(req)
-            if (!errors.isEmpty()) return next(MyError.inputErrors( errors.array()))
+            if (!errors.isEmpty()) return next(MyError.inputErrors(errors.array()))
 
             let {email, password, timezoneOffset, checkEmail} = req.body;
             email = email.toLowerCase().trim()
 
-            const userExists = await this.userService.checkUserExists(email)
-
-            if (userExists) {
-                return next(MyError.inputErrors( [{msg:`Email ${email} is taken`, path:'email'}]))
-            }
             const user = await this.userService.signup(email, password, timezoneOffset, checkEmail)
             const userForTransfer = UserTokenDto.fromUser(user)
             if (checkEmail)
                 await this.mailService.sendActivationMail(email, `${process.env.API_URL}/activate/${user.activationLink}`);
             const tokens = await this.tokenService.generateTokens(userForTransfer)
-            await this.tokenService.saveRefreshToken(user._id, tokens.refreshToken)
+            await this.tokenService.saveRefreshToken(email, tokens.refreshToken)
             res.cookie('refreshToken', tokens.refreshToken, {
                 maxAge: 15 * 24 * 60 * 60 * 1000,
                 httpOnly: true
@@ -57,7 +52,7 @@ export class UserController {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                return next(MyError.inputErrors( errors.array()))
+                return next(MyError.inputErrors(errors.array()))
             }
 
             let {email, password} = req.body
@@ -65,29 +60,29 @@ export class UserController {
             const userExists = await this.userService.checkUserExists(email)
 
             if (!userExists) {
-                return next(MyError.inputError( 'User with such email was not found',  'email'))
+                return next(MyError.inputError('User with such email was not found', 'email'))
             }
             let user = await this.userService.getOneByEmail(email)
 
             const passwordIsValid = await this.userService.checkPassword(email, password)
 
-            if(!passwordIsValid){
-                return next(MyError.inputError( 'Invalid password',  'password'))
+            if (!passwordIsValid) {
+                return next(MyError.inputError('Invalid password', 'password'))
 
             }
             const userForTransfer = UserTokenDto.fromUser(user)
 
             if (!user.isActivated) {
-                return next(MyError.inputError('You need to confirm your email',  'emailActivation'))
+                return next(MyError.inputError('You need to confirm your email', 'emailActivation'))
             }
-            if (user.roles === 'ADMIN') {
-                return next(MyError.inputError('User with such email was not found',  'email'))
+            if (user.roles.includes('ADMIN')) {
+                return next(MyError.inputError('User with such email was not found', 'email'))
             }
-            if (user.roles === 'BANNED') {
-                return next(MyError.inputError('Your account is blocked',  'email'))
+            if (user.roles.includes('BANNED')) {
+                return next(MyError.inputError('Your account is blocked', 'email'))
             }
             const tokens = await this.tokenService.generateTokens(userForTransfer)
-            await this.tokenService.saveRefreshToken(user._id, tokens.refreshToken)
+            await this.tokenService.saveRefreshToken(email, tokens.refreshToken)
 
             res.cookie('refreshToken', tokens.refreshToken, {
                 maxAge: 15 * 24 * 60 * 60 * 1000,
@@ -105,10 +100,10 @@ export class UserController {
         try {
             const {email, password} = req.body
             const userExists = await this.userService.checkUserExists(email)
-            if (!userExists) return next(MyError.inputError('User with such email was not found',  'email'))
+            if (!userExists) return next(MyError.inputError('User with such email was not found', 'email'))
             const user = await this.userService.getOneByEmail(email)
             await this.mailService.sendActivationMail(user.email, `${process.env.API_URL}/activate/${user.activationLink}`);
-            return res.json({})
+            return res.json(successResponseMapper())
         } catch (e) {
             next(e)
         }
@@ -117,10 +112,9 @@ export class UserController {
     async logout(req: Request, res: Response, next: NextFunction) {
         try {
             const {refreshToken} = req.cookies;
-            const isSuccessful = await this.tokenService.removeToken(refreshToken);
+            await this.tokenService.removeToken(refreshToken);
             res.clearCookie('refreshToken');
-            const response = successResponseMapper()
-            return res.json(response);
+            return res.json(successResponseMapper());
         } catch (e) {
             next(e);
         }
@@ -131,7 +125,8 @@ export class UserController {
             const email = req.body.user.email;
             const user = await this.userService.getOneByEmail(email)
             const userForTransfer = UserTokenDto.fromUser(user);
-            return res.json(userForTransfer)
+            const response = successResponseMapper(userForTransfer)
+            return res.json(response)
         } catch (e) {
             next(e)
         }
@@ -157,13 +152,13 @@ export class UserController {
             if (!user.isActivated) {
                 next(MyError.inputError('User with such email was not found', 'email'))
             }
-            if (user.roles === 'BANNED') {
-                next(MyError.inputError('Your account is blocked',  'email'))
+            if (user.roles.includes('BANNED')) {
+                next(MyError.inputError('Your account is blocked', 'email'))
             }
             const userForTransfer = UserTokenDto.fromUser(user)
 
             const tokens = await this.tokenService.generateTokens(userForTransfer)
-            await this.tokenService.saveRefreshToken(user._id, tokens.refreshToken)
+            await this.tokenService.saveRefreshToken(user.email, tokens.refreshToken)
             res.cookie('refreshToken', tokens.refreshToken, {
                 maxAge: 15 * 24 * 60 * 60 * 1000,
                 httpOnly: true
@@ -216,21 +211,21 @@ export class UserController {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                return next(MyError.inputErrors( errors.array()))
+                return next(MyError.inputErrors(errors.array()))
             }
             const email = req.body.user.email;
             const {oldPassword, newPassword} = req.body;
             if (oldPassword === newPassword) {
-                return next(MyError.inputError('Passwords are the same',  'newPassword'))
+                return next(MyError.inputError('Passwords are the same', 'newPassword'))
             }
             const verification = await this.userService.checkPassword(email, oldPassword)
             if (!verification) {
-                return next(MyError.inputError('Incorrect password',  'oldPassword'))
+                return next(MyError.inputError('Incorrect password', 'oldPassword'))
             }
 
             await this.userService.setNewPassword(email, newPassword)
             const user = await this.userService.getOneByEmail(email)
-            await this.tokenService.removeAllUserTokens(user._id)
+            await this.tokenService.removeAllUserTokens(email)
             await this.mailService.sendPasswordIsChangedMail(email)
             res.clearCookie('refreshToken');
             return res.json(successResponseMapper())
@@ -249,10 +244,10 @@ export class UserController {
             await this.mailService.sendNewPasswordMail(email, newPassword)
             await this.userService.setNewPassword(email, newPassword)
             const user = await this.userService.getOneByEmail(email)
-            await this.tokenService.removeAllUserTokens(user._id)
+            await this.tokenService.removeAllUserTokens(email)
             const userForTransfer = UserTokenDto.fromUser(user);
             res.clearCookie('refreshToken');
-            return res.json(successResponseMapper())
+            return res.json(successResponseMapper(userForTransfer))
         } catch (e) {
             next(e)
         }

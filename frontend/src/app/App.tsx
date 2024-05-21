@@ -18,8 +18,8 @@ function App() {
 
         async function userInit() {
             try {
-                const user = await UserApi.getUser();
-                setUser(user)
+                const response = await UserApi.getUser();
+                setUser(response.data)
                 setLoading(false)
             } catch (e) {
                 setLoading(false)

@@ -6,8 +6,13 @@ import {TokenDomainServiceImpl} from "./infrastructure/db/dbServices/TokenDomain
 import {MailDomainServiceImpl} from "./infrastructure/mail/services/MailDomainServiceImpl";
 import MailService from "./application/service/MailService";
 
-export const userService = new UserService( new UserDomainServiceImpl());
-export const mailService =  new MailService(new MailDomainServiceImpl());
-export const tokenService = new TokenService( new TokenDomainServiceImpl());
+const userDomainService = new UserDomainServiceImpl();
+const mailDomainService = new MailDomainServiceImpl();
+const tokenDomainService = new TokenDomainServiceImpl();
+
+
+export const userService = new UserService( userDomainService, mailDomainService);
+export const mailService =  new MailService(mailDomainService);
+export const tokenService = new TokenService( tokenDomainService);
 
 export const userController = new UserController(userService, tokenService, mailService);
