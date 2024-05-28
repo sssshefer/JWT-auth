@@ -12,5 +12,12 @@ COPY . .
 
 EXPOSE 3000
 
-RUN npm run build
+#RUN npm run build
 
+RUN npm install pm2 -g
+
+RUN npm install -g bun
+
+run pm2 status
+
+CMD ["/bin/sh", "-c", "pm2-runtime 'npm start'"]
