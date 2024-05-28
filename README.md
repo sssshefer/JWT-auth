@@ -1,6 +1,6 @@
 # JWT Authentication
 
-This application demonstrates the benefits of using Json Web Tokens (JWT) for authentication. The app is built with React, TypeScript, Express, Node.js, MongoDB and Docker
+This application demonstrates the benefits of using **Json Web Tokens** (JWT) for authentication. The app is built with React, TypeScript, Express, Node.js, MongoDB and Docker
 
 ## Features
 
