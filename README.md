@@ -1,4 +1,4 @@
-# JWT Authentication
+# <img src="https://github.com/sssshefer/JWT-auth/assets/63253440/0da60f27-3cb9-4a3c-8844-fc43b2d85d0f" width="24"> JWT Authentication
 
 This application demonstrates the benefits of using **Json Web Tokens** (JWT) for authentication. The app is built with React, TypeScript, Express, Node.js, MongoDB and Docker
 
