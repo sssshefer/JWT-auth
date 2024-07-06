@@ -2,6 +2,21 @@
 
 This application demonstrates the benefits of using **Json Web Tokens** (JWT) for authentication. The app is built with React, TypeScript, Express, Node.js, MongoDB and Docker
 
+## Table of Contents
+
+- [Features](#features)
+- [Test User Credentials For Website](#test-user-credentials-for-website)
+- [Exciting Features to Explore in This Project](#exciting-features-to-explore-in-this-project)
+- [Project Structure](#project-structure)
+  - [Backend](#backend)
+    - [Authentication](#authentication)
+    - [Database](#database)
+    - [Emails](#emails)
+  - [Frontend](#frontend)
+    - [User Interface](#user-interface)
+    - [Persistent Login](#persistent-login)
+- [How to Run Locally](#how-to-run-locally)
+- [NGINX Container](#nginx-container)
 ## Features
 
 - **Sign Up and Login**: Create an account and log in using JWT for secure session management
